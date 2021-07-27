@@ -1,3 +1,4 @@
+/* CTCI */
 /* check if one word is a rotation of another word */
 /* Use one call to the isSubstring() function */
 

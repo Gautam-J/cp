@@ -1,3 +1,4 @@
+/* CTCI */
 /* Method to replace all spaces in a string with '%20' */
 /* Assuming the string has enough spaces at the end to hold chars */
 

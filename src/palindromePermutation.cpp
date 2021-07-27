@@ -1,3 +1,4 @@
+/* CTCI */
 /* Function to check if the given string is a permutation of a palindrome */
 
 /* We iterate through a hash table and ensure that no more than one char */
