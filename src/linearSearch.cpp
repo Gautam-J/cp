@@ -8,7 +8,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int linearSearch(vector<int> arr, int v) {
+int linearSearch(vector<int>& arr, int v) {
 
     for (int i = 0; i < arr.size(); i++) {
         if (arr[i] == v)

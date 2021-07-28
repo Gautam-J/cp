@@ -38,7 +38,7 @@ vector<int> buildCharFrequencyTable(string str) {
 }
 
 /* check that no more than one character has an odd count */
-bool checkMaxOneOdd(vector<int> table) {
+bool checkMaxOneOdd(vector<int>& table) {
     bool foundOdd = false;
 
     for (int count : table) {

@@ -8,7 +8,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-vector<int> insertionSort(vector<int> arr) {
+void insertionSort(vector<int>& arr) {
     int key, i;
 
     for (int j = 1; j < arr.size(); j++) {
@@ -25,8 +25,6 @@ vector<int> insertionSort(vector<int> arr) {
         // insert key into sorted subarray A[0...j - 1]
         arr[i + 1] = key;
     }
-
-    return arr;
 }
 
 int main() {
@@ -44,7 +42,7 @@ int main() {
     }
 
     // sort array
-    arr = insertionSort(arr);
+    insertionSort(arr);
 
     // print arr
     for (int i = 0; i < n; i++) {

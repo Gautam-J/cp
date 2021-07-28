@@ -6,7 +6,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-vector<int> selectionSort(vector<int> arr) {
+void selectionSort(vector<int>& arr) {
     int min_index, temp;
 
     for (int i = 0; i < arr.size() - 1; i++) {
@@ -21,8 +21,6 @@ vector<int> selectionSort(vector<int> arr) {
         // swap the min_index value with value at index i
         swap(arr[min_index], arr[i]);
     }
-
-    return arr;
 }
 
 int main() {
@@ -40,7 +38,7 @@ int main() {
     }
 
     // sort array
-    arr = selectionSort(arr);
+    selectionSort(arr);
 
     // print arr
     for (int i = 0; i < n; i++) {
