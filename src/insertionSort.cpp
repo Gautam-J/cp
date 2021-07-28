@@ -1,5 +1,7 @@
 /* CLRS */
 
+/* Best case run time complexity: O(N) */
+
 /* Time Complexity: O(N^2) */
 /* Space Complexity: O(1) since we are doing it inplace */
 
