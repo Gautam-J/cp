@@ -10,7 +10,7 @@ int binarySearch(vector<int>& arr, int v, int low, int high) {
     if (low > high)
         return -1;
 
-    int mid = (low + high) / 2;
+    int mid = (low + high) / 2;  // floor division
 
     if (v == arr[mid])
         return mid;
