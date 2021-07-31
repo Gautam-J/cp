@@ -7,7 +7,7 @@
 using namespace std;
 
 void selectionSort(vector<int>& arr) {
-    int min_index, temp;
+    int min_index;
 
     for (int i = 0; i < arr.size() - 1; i++) {
 
