@@ -1,4 +1,4 @@
-/* CF */
+/* CF - 800 */
 /*
 A. Watermelon
 time limit per test1 second
