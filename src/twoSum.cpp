@@ -45,7 +45,7 @@ vector<int> twoSum(vector<int>& arr, int x) {
     // sort the given array O(n lg n)
     sort(arr.begin(), arr.end());
 
-    // use binary search to check if elements add upto x O(n lg n)
+    // use binary search to check if elements add upto x O(lg n)
     int low = 0;
     int high = arr.size() - 1;
     while (low < high) {
