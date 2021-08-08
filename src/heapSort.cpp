@@ -28,6 +28,12 @@ void buildMaxHeap(vector<int>& arr) {
 
     for (int i = n / 2 - 1; i >= 0; i--)
         maxHeapify(arr, i, n);
+
+    // print max heap
+    cout << "Max Heap:" << '\n';
+    for (auto x : arr)
+        cout << x << " ";
+    cout << '\n';
 }
 
 void heapSort(vector<int>& arr) {
@@ -58,6 +64,7 @@ int main() {
     heapSort(arr);
 
     // print arr
+    cout << "Sorted array:" << '\n';
     for (int i = 0; i < n; i++) {
         cout << arr[i] << " ";
     }
