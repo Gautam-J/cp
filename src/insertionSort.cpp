@@ -17,7 +17,7 @@ void insertionSort(vector<int>& arr) {
 
         // switch / move elements within the sorted subarray
         i = j - 1;
-        while (i >= 0 && arr[i] > key) {
+        while (i >= 0 && arr[i] > key) {  // arr[i] < key for desc
             arr[i + 1] = arr[i];
             i--;
         }
