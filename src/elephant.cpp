@@ -36,6 +36,7 @@ using namespace std;
 
 int getLeastSteps(int x) {
     int steps = ((x + 4) / 5);
+    // steps = ceil((float)x / 5.0)
     return steps;
 }
 
