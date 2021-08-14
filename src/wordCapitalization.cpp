@@ -1,3 +1,4 @@
+/* CF - 800 */
 /*
 A. Word Capitalization
 time limit per test2 seconds
