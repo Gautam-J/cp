@@ -1,4 +1,4 @@
-/* CF- 900 */
+/* CF - 900 */
 /*
 B. Customising the Track
 time limit per test1 second
