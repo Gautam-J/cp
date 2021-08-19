@@ -1,4 +1,4 @@
-/* CF - */
+/* CF - 800 */
 /*
 A. Dislike of Threes
 time limit per test1 second
@@ -42,6 +42,8 @@ outputCopy
 14
 1666
 */
+
+/* Easier solution without using dp exists (facepalm) */
 
 /* Time Complexity: O(n) where n = k */
 /* Space Complexity: O(n) where n = k */

@@ -1,4 +1,4 @@
-/* CF - */
+/* CF - 800 */
 /*
 B. Who's Opposite?
 time limit per test1 second

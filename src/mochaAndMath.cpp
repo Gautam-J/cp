@@ -1,4 +1,4 @@
-/* CF - */
+/* CF - 900 */
 /*
 A. Mocha and Math
 time limit per test1 second
