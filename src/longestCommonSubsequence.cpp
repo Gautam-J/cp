@@ -53,7 +53,7 @@ int getLength(string& s1, string& s2) {
 
     int dp[m + 1][n + 1];
 
-    // if either i or j equals 0, length of LCS is 0
+    // if either i or j equals 0, length of longest common subsequence is 0
     FOR(i, m + 1)
         dp[i][0] = 0;
     FOR(j, n + 1)

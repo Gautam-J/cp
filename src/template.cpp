@@ -11,7 +11,7 @@ using namespace std;
 
 #define FOR(i, n) for (int i = 0; i < n; i++)
 #define all(a) a.begin(), a.end()
-#define trav(a, x) for (auto& a : x)
+#define trav(i, a) for (auto& i : a)
 
 typedef long long ll;
 typedef vector<int> vi;
