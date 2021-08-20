@@ -50,8 +50,8 @@ and 50 participants with points 2 and 9 for the first and second contest respect
 Hence the total point score of the participant on the 100-th place is 12.
 */
 
-/* Time Complexity: O() */
-/* Space Complexity: O() */
+/* Time Complexity: O(1) */
+/* Space Complexity: O(1) */
 
 #include <bits/stdc++.h>
 using namespace std;

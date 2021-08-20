@@ -31,8 +31,8 @@ outputCopy
 -1
 */
 
-/* Time Complexity: O() */
-/* Space Complexity: O() */
+/* Time Complexity: O(n) where n equals x */
+/* Space Complexity: O(n) where n equals x */
 
 #include <bits/stdc++.h>
 using namespace std;

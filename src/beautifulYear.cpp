@@ -26,7 +26,7 @@ outputCopy
 2014
 */
 
-/* Time Complexity: O() ?? */
+/* Time Complexity: O(?) */
 /* Space Complexity: O(1) */
 
 #include <bits/stdc++.h>
