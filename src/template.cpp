@@ -12,6 +12,7 @@ using namespace std;
 #define FOR(i, n) for (int i = 0; i < n; i++)
 #define all(a) a.begin(), a.end()
 #define trav(i, a) for (auto& i : a)
+#define debug(x) cout << "[DEBUG] " << #x << "=" << x << '\n'
 
 typedef long long ll;
 typedef vector<int> vi;
