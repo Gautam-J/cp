@@ -16,6 +16,7 @@ using namespace std;
 typedef long long ll;
 typedef vector<int> vi;
 
+mt19937 mt_rand(chrono::high_resolution_clock::now().time_since_epoch().count());
 const char nl = '\n';
 
 int main() {
@@ -23,6 +24,10 @@ int main() {
     cin.tie(0);
 
     cout << "Hello world!" << nl;
+
+#ifdef _GLIBCXX_DEBUG
+    cerr << endl << "finished in " << clock() * 1.0 / CLOCKS_PER_SEC << " sec" << endl;
+#endif
 
     return 0;
 }
