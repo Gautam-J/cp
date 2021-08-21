@@ -36,8 +36,8 @@ In the first sample, Little X can pass levels [1 2 3], and Little Y can pass lev
 In the second sample, no one can pass level 4.
 */
 
-/* Time Complexity: O() */
-/* Space Complexity: O() */
+/* Time Complexity: O(p1 + p2) where pi is the length of the ith array */
+/* Space Complexity: O(n) */
 
 #include <bits/stdc++.h>
 using namespace std;
