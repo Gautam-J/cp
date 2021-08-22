@@ -19,6 +19,7 @@ typedef vector<int> vi;
 
 mt19937 mt_rand(chrono::high_resolution_clock::now().time_since_epoch().count());
 const char nl = '\n';
+const double PI = acos(-1);
 
 int main() {
     ios_base::sync_with_stdio(0);
