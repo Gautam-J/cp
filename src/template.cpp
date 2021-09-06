@@ -11,8 +11,14 @@ using namespace std;
 
 #define FOR(i, n) for (int i = 0; i < n; i++)
 #define all(a) a.begin(), a.end()
+#define sz(x) (int)(x).size()
 #define trav(i, a) for (auto& i : a)
-#define debug(x) cout << "[DEBUG] " << #x << "=" << x << '\n'
+
+#ifdef _GLIBCXX_DEBUG
+#define debug(x) cerr << "\e[91m"<<"[DEBUG] "<<__func__<<":"<<__LINE__<<" [" << #x << "] = [" << x << "]" << "\e[39m" << '\n';
+#else
+#define debug(x)
+#endif
 
 typedef long long ll;
 typedef vector<int> vi;
