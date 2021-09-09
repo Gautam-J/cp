@@ -1,4 +1,4 @@
-/* CF - */
+/* CF - 1000 */
 /*
 B. MEXor Mixup
 time limit per test2 seconds

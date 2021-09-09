@@ -1,4 +1,4 @@
-/* CF - */
+/* CF - 800 */
 /*
 A. Domino Disaster
 time limit per test2 seconds
