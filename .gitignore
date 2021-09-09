@@ -1,4 +1,5 @@
 bin/
 testCases
 
-src/chessTournament.cpp
+input.txt
+output.txt
