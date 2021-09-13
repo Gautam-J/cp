@@ -21,7 +21,9 @@ using namespace std;
 #endif
 
 typedef long long ll;
+typedef pair<int, int> pi;
 typedef vector<int> vi;
+typedef vector<pi> vpi;
 
 mt19937 mt_rand(chrono::high_resolution_clock::now().time_since_epoch().count());
 const char nl = '\n';
