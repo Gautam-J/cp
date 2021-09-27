@@ -12,6 +12,9 @@ int binarySearch(vector<int>& arr, int v, int low, int high) {
 
     int mid = (low + high) / 2;  // floor division
 
+    // to prevent overflow, use the below formula
+    /* int mid = low + (high - low) / 2;  // floor division */
+
     if (v == arr[mid])
         return mid;
     if (v > arr[mid])
