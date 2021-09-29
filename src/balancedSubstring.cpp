@@ -1,4 +1,4 @@
-
+/* CF - 800 */
 /*
 A. Balanced Substring
 time limit per test2 seconds

@@ -1,4 +1,4 @@
-
+/* CF - 1000 */
 /*
 B. Chess Tournament
 time limit per test2 seconds

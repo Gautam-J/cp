@@ -1,4 +1,4 @@
-
+/* CF - 800 */
 /*
 A. Median Maximization
 time limit per test1 second
