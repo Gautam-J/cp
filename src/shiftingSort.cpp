@@ -1,4 +1,4 @@
-
+/* CF - 1100 */
 /*
 B. Shifting Sort
 time limit per test2 seconds

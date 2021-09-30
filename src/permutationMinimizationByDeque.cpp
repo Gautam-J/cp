@@ -1,4 +1,4 @@
-
+/* CF - 1000 */
 /*
 E1. Permutation Minimization by Deque
 time limit per test2 seconds
@@ -88,9 +88,7 @@ void solve(vi& a) {
     deque<int> res;
 
     trav(i, a) {
-        if (res.empty())
-            res.push_back(i);
-        else if (res.front() > i)
+        if (res.empty() || res.front() > i)
             res.push_front(i);
         else
             res.push_back(i);

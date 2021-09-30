@@ -1,4 +1,4 @@
-
+/* CF - 800 */
 /*
 A. Casimir's String Solitaire
 time limit per test2 seconds
@@ -80,6 +80,10 @@ bool solve(string& s) {
     }
 
     return (cnt['B'] == (cnt['A'] + cnt['C']));
+
+    // simple method
+    // check if count of B is equal to half the length of the string
+    return (count(all(s), 'B') == (int)(s.size() / 2));
 }
 
 int main() {
