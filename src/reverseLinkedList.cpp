@@ -29,8 +29,8 @@ We can use recursion also!
 
 */
 
-/* Time Complexity: O() */
-/* Space Complexity: O() */
+/* Time Complexity: O(n) where n is the number of nodes in the linked list. */
+/* Space Complexity: O(1) */
 
 #include <bits/stdc++.h>
 using namespace std;
