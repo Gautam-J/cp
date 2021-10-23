@@ -3,3 +3,5 @@ testCases
 
 input.txt
 output.txt
+
+src/equalBeauty.cpp
