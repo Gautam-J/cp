@@ -64,13 +64,33 @@ int solve(int x) {
     return rev;
 }
 
+ll sum = 0;
+ll helper(ll x) {
+    if (x == 0)
+        return sum;
+
+    sum = sum * 10 + (x % 10);
+    helper(x / 10);
+    return sum;
+
+}
+
+int solveRecursive(int x) {
+    ll rev = helper((ll)x);
+
+    if (rev <= (-pow(2, 31)) || rev >= (pow(2, 31) - 1))
+        return 0;
+
+    return (int)rev;
+}
+
 int main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
 
     int n;
     cin >> n;
-    cout << solve(n) << nl;
+    cout << solveRecursive(n) << nl;
 
 #ifdef _GLIBCXX_DEBUG
     cerr << endl << "finished in " << clock() * 1.0 / CLOCKS_PER_SEC << " sec" << endl;
