@@ -1,4 +1,4 @@
-// CF -
+/* CF - 800 */
 /*
 A. Make Even
 time limit per test1 second
@@ -81,11 +81,10 @@ int solve(int n) {
     if (n < 10)
         return n % 2 == 0 ? 0 : -1;
 
-    // if first digit is even
-    if ((n % 10) % 2 == 0)
+    if (n % 2 == 0)
         return 0;
 
-    // if last digit is even
+    // if first digit is even
     int temp = n, digit;
     while (temp) {
         digit = temp % 10;
@@ -94,6 +93,7 @@ int solve(int n) {
     if (digit % 2 == 0)
         return 1;
 
+    // if any other digit other than first and last is even
     temp = n;
     while (temp) {
         digit = temp % 10;
