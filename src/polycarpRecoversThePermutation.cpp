@@ -1,4 +1,4 @@
-
+/* CF - 1000 */
 /*
 C. Polycarp Recovers the Permutation
 time limit per test2 seconds
