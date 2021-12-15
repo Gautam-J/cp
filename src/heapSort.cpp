@@ -37,7 +37,6 @@ void buildMaxHeap(vector<int>& arr) {
 }
 
 void heapSort(vector<int>& arr) {
-    int heapSize = arr.size();
     buildMaxHeap(arr);
 
     for (int i = arr.size() - 1; i >= 0; i--) {
