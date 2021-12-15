@@ -1,4 +1,4 @@
-
+/* CF - 900 */
 /*
 A. Long Comparison
 time limit per test2 seconds
