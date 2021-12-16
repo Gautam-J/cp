@@ -1,4 +1,4 @@
-
+/* CF - 800 */
 /*
 A. Polycarp and Sums of Subsequences
 time limit per test1 second

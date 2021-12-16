@@ -1,4 +1,4 @@
-
+/* CF - 1100 */
 /*
 C. Paint the Array
 time limit per test2 seconds

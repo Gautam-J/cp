@@ -1,4 +1,4 @@
-
+/* CF - 1300 */
 /*
 D. Array and Operations
 time limit per test2 seconds

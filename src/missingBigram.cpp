@@ -1,4 +1,4 @@
-
+/* CF - 800 */
 /*
 B. Missing Bigram
 time limit per test2 seconds
