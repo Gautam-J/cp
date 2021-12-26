@@ -100,7 +100,7 @@ private:
     vector<vpi> adjL;
 
     vector<bool> visitedBFS, visitedDFS;
-    vi distBFS, parBFS, discoverDFS, finishDFS, parDFS, root;
+    vi distBFS, parBFS, discoverDFS, finishDFS, parDFS, root, distBF, parBF;
 
     list<int> topologicalOrder;
 
@@ -334,7 +334,58 @@ public:
         cout << "Weight of minimum spanning tree (Prim): " << mstWeight << nl;
     };
 
-    void bellmanFord() {};
+    void initializeSingleSource(int s) {
+        this->distBF.resize(this->nVertices, imax);
+        this->parBF.resize(this->nVertices, imin);
+        this->distBF[s] = 0;
+    }
+
+    void relax(Edge e) {
+        if (this->distBF[e.src] != imax && this->distBF[e.dest] > this->distBF[e.src] + e.w) {
+            this->distBF[e.dest] = this->distBF[e.src] + e.w;
+            this->parBF[e.dest] = e.src;
+        }
+    }
+
+    bool bellmanFordUtil(vector<Edge>& edges, int s) {
+        // returns TRUE if NO negative weight cycle
+
+        initializeSingleSource(s);
+        FOR(i, this->nVertices - 1) {
+            trav(e, edges) {
+                relax(e);
+            }
+        }
+
+        trav(e, edges) {
+            if (this->distBF[e.src] != imax && this->distBF[e.dest] > this->distBF[e.src] + e.w)
+                return false;
+        }
+        return true;
+    };
+
+    void printBellmanFordPath(int i) {
+        if (this->parBF[i] == imin)
+            return;
+        printBellmanFordPath(this->parBF[i]);
+        cout << i << " ";
+    }
+
+    void bellmanFord(vector<Edge>& edges, int s) {
+        cout << nl << "Bellman Ford Algorithm:" << nl;
+        bool hasNegativeCycle = !bellmanFordUtil(edges, s);
+
+        if (hasNegativeCycle) {
+            cout << "Given graph has negative cycle." << nl;
+        } else {
+            FOR(i, nVertices) {
+                cout << "Destination: " << i << " Path: " << s << " ";
+                printBellmanFordPath(i);
+                cout << " Minimum Distance: " << this->distBF[i] << nl;
+            }
+        }
+    }
+
     void dagShortest() {};  // uses topological sorting
     void dijkstra() {};
     void floydWarshall() {};
@@ -344,7 +395,7 @@ int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int nVertices, nEdges, srcForBFS, shortestPathBFSDest, dir, srcForPrim;
+    int nVertices, nEdges, srcForBFS, shortestPathBFSDest, dir, srcForPrim, srcForBF;
     cin >> nVertices >> nEdges;
 
     vector<Edge> edges(nEdges);
@@ -369,6 +420,13 @@ int main() {
 
     cin >> srcForPrim;
     G.prim(srcForPrim);
+
+    cin >> srcForBF;
+    G.bellmanFord(edges, srcForBF);
+
+    G.dagShortest();
+    G.dijkstra();
+    G.floydWarshall();
 
 #ifdef _GLIBCXX_DEBUG
     cerr << endl << "finished in " << clock() * 1.0 / CLOCKS_PER_SEC << " sec" << endl;
