@@ -5,6 +5,26 @@ Input is given as an adjacency list.
 
 Sample Input
 
+9 14
+0 1 4
+0 7 8
+1 2 8
+1 7 11
+2 3 7
+2 8 2
+2 5 4
+3 4 9
+3 5 14
+4 5 10
+5 6 2
+6 7 1
+6 8 6
+7 8 7
+0
+0
+5
+0
+---
 10 13
 0 3 1
 0 1 3
@@ -22,6 +42,7 @@ Sample Input
 1
 0
 5
+0
 
 */
 
@@ -57,10 +78,10 @@ template<typename T> T lcm(T a, T b) { return (a * (b / gcd(a, b))); }
 #endif
 
 typedef long long ll;
-typedef pair<int, int> pi;
-typedef vector<int> vi;
-typedef vector<vi> vvi;
-typedef vector<pi> vpi;
+typedef pair< int, int > pi;
+typedef vector< int > vi;
+typedef vector <vi > vvi;
+typedef vector< pi > vpi;
 
 // mt19937_64 for 64 bit random numbers
 mt19937 mt_rand(chrono::high_resolution_clock::now().time_since_epoch().count());
@@ -79,7 +100,7 @@ private:
     vector<vpi> adjL;
 
     vector<bool> visitedBFS, visitedDFS;
-    vector<int> distBFS, parBFS, discoverDFS, finishDFS, parDFS;
+    vi distBFS, parBFS, discoverDFS, finishDFS, parDFS, root;
 
     list<int> topologicalOrder;
 
@@ -124,6 +145,20 @@ private:
         this->topologicalOrder.push_front(u);
 
         cout << u << " ";
+    }
+
+    int parent(int a) {
+        while (this->root[a] != a) {
+            this->root[a] = this->root[this->root[a]];
+            a = this->root[a];
+        }
+        return a;
+    }
+
+    void unionFind(int a, int b) {
+        int parA = this->parent(a);
+        int parB = this->parent(b);
+        this->root[parA] = this->root[parB];
     }
 
 public:
@@ -223,8 +258,82 @@ public:
         cout << nl;
     }
 
-    void kruskal() {};
-    void prim() {};
+    void kruskal(vector<Edge>& edges) {
+        cout << nl << "Kruskal's Algorithm:" << nl;
+        cout << "Warning! Kruskal's algorithm works only for undirected graphs!\n";
+        int mstWeight = 0;
+        int nEdges = sz(edges);
+        int s, d, w;
+
+        this->root.resize(1e6-1);
+        iota(all(this->root), 0);
+
+        sort(all(edges), [](Edge a, Edge b) { return a.w < b.w; });
+
+        FOR(i, nEdges) {
+            s = edges[i].src; d = edges[i].dest; w = edges[i].w;
+
+            if (this->parent(s) != this->parent(d)) {
+                cout << s << " -> " << d << " weight " << w << nl;
+
+                mstWeight += w;
+                this->unionFind(s, d);
+            }
+        }
+        cout << "Weight of minimum spanning tree (Kruskal): " << mstWeight << nl;
+    };
+
+    void prim(int src) {
+        cout << nl << "Prim's Algorithm:" << nl;
+        cout << "Warning! Prim's algorithm works only for undirected graphs!\n";
+
+        priority_queue<pi, vpi, greater<pi> > pq;
+        int u, v, w, mstWeight = 0;
+
+        vi key(this->nVertices, imax);
+        vi parent(this->nVertices, -1);
+        vector<bool> inMST(this->nVertices, false);
+
+        pq.push(make_pair(0, src));
+        key[src] = 0;
+
+        while (!pq.empty()) {
+            u = pq.top().second; pq.pop();
+
+            if (inMST[u])
+                continue;
+
+            inMST[u] = true;
+            trav(x, this->adjL[u]) {
+                v = x.first;
+                w = x.second;
+
+                if (inMST[v] == false && key[v] > w) {
+                    key[v] = w;
+                    pq.push(make_pair(key[v], v));
+                    parent[v] = u;
+                }
+            }
+        }
+
+        int tsrc, tdest, weight = 0;
+        for (int i = 1; i < this->nVertices; i++) {
+            tsrc = parent[i];
+            tdest = i;
+
+            trav(e, adjL[tsrc]) {
+                if (e.first == tdest) {
+                    weight = e.second;
+                    break;
+                }
+            }
+
+            mstWeight += weight;
+            cout << tsrc << " -> " << tdest << " weight " << weight << nl;  // << it->second << nl;
+        }
+        cout << "Weight of minimum spanning tree (Prim): " << mstWeight << nl;
+    };
+
     void bellmanFord() {};
     void dagShortest() {};  // uses topological sorting
     void dijkstra() {};
@@ -235,7 +344,7 @@ int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int nVertices, nEdges, srcForBFS, shortestPathBFSDest, dir;
+    int nVertices, nEdges, srcForBFS, shortestPathBFSDest, dir, srcForPrim;
     cin >> nVertices >> nEdges;
 
     vector<Edge> edges(nEdges);
@@ -255,6 +364,11 @@ int main() {
 
     G.DFS();
     G.topologicalSort();
+
+    G.kruskal(edges);
+
+    cin >> srcForPrim;
+    G.prim(srcForPrim);
 
 #ifdef _GLIBCXX_DEBUG
     cerr << endl << "finished in " << clock() * 1.0 / CLOCKS_PER_SEC << " sec" << endl;
