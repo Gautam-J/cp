@@ -40,8 +40,8 @@ template<typename T> T lcm(T a, T b) { return (a * (b / gcd(a, b))); }
 typedef long long ll;
 typedef pair<int, int> pi;
 typedef vector<int> vi;
-typedef vector<vi> vvi;
-typedef vector<pi> vpi;
+typedef vector< vi > vvi;
+typedef vector< pi > vpi;
 
 // mt19937_64 for 64 bit random numbers
 mt19937 mt_rand(chrono::high_resolution_clock::now().time_since_epoch().count());
