@@ -4,45 +4,21 @@ Implementation of different graph algorithms using OOP.
 Input is given as an adjacency list.
 
 Sample Input
+DAG that works for all algos implemented here.
 
-9 14
-0 1 4
-0 7 8
-1 2 8
-1 7 11
-2 3 7
-2 8 2
-2 5 4
-3 4 9
-3 5 14
-4 5 10
-5 6 2
-6 7 1
-6 8 6
-7 8 7
-0
-0
-5
-0
----
-10 13
-0 3 1
-0 1 3
-3 2 6
-1 2 1
-2 9 8
-2 8 2
-1 7 6
-7 6 2
-1 6 1
+7 9
+0 1 1
+0 2 2
+1 3 4
 1 4 5
-6 4 9
-4 5 0
-4 7 3
+4 6 10
+3 6 9
+5 4 9
+5 6 11
+2 5 7
 1
 0
-5
-0
+4
 
 */
 
@@ -100,7 +76,7 @@ private:
     vector<vpi> adjL;
 
     vector<bool> visitedBFS, visitedDFS;
-    vi distBFS, parBFS, discoverDFS, finishDFS, parDFS, root, distBF, parBF;
+    vi distBFS, parBFS, discoverDFS, finishDFS, parDFS, root, distBF, parBF, distDAG, parDAG, distDIJ, parDIJ;
 
     list<int> topologicalOrder;
 
@@ -159,6 +135,43 @@ private:
         int parA = this->parent(a);
         int parB = this->parent(b);
         this->root[parA] = this->root[parB];
+    }
+
+    void initializeSingleSource(vi& dist, vi& par, int s) {
+        dist.resize(this->nVertices, imax);
+        par.resize(this->nVertices, imin);
+        dist[s] = 0;
+    }
+
+    void relax(vi& dist, vi& par, int src, int dest, int w) {
+        if (dist[src] != imax && dist[dest] > dist[src] + w) {
+            dist[dest] = dist[src] + w;
+            par[dest] = src;
+        }
+    }
+
+    bool bellmanFordUtil(vector<Edge>& edges, int s) {
+        // returns TRUE if NO negative weight cycle
+
+        initializeSingleSource(this->distBF, this->parBF, s);
+        FOR(i, this->nVertices - 1) {
+            trav(e, edges) {
+                relax(this->distBF, this->parBF, e.src, e.dest, e.w);
+            }
+        }
+
+        trav(e, edges) {
+            if (this->distBF[e.src] != imax && this->distBF[e.dest] > this->distBF[e.src] + e.w)
+                return false;
+        }
+        return true;
+    };
+
+    void printPathParent(vi& par, int i) {
+        if (par[i] == imin)
+            return;
+        printPathParent(par, par[i]);
+        cout << i << " ";
     }
 
 public:
@@ -252,6 +265,7 @@ public:
         }
 
         cout << nl << "Topological Sort:" << nl;
+        cout << "Warning! Topological sort can only be done on a directed acyclic graph (DAG)!\n";
 
         trav(i, this->topologicalOrder)
             cout << i << " ";
@@ -334,60 +348,79 @@ public:
         cout << "Weight of minimum spanning tree (Prim): " << mstWeight << nl;
     };
 
-    void initializeSingleSource(int s) {
-        this->distBF.resize(this->nVertices, imax);
-        this->parBF.resize(this->nVertices, imin);
-        this->distBF[s] = 0;
-    }
-
-    void relax(Edge e) {
-        if (this->distBF[e.src] != imax && this->distBF[e.dest] > this->distBF[e.src] + e.w) {
-            this->distBF[e.dest] = this->distBF[e.src] + e.w;
-            this->parBF[e.dest] = e.src;
-        }
-    }
-
-    bool bellmanFordUtil(vector<Edge>& edges, int s) {
-        // returns TRUE if NO negative weight cycle
-
-        initializeSingleSource(s);
-        FOR(i, this->nVertices - 1) {
-            trav(e, edges) {
-                relax(e);
-            }
-        }
-
-        trav(e, edges) {
-            if (this->distBF[e.src] != imax && this->distBF[e.dest] > this->distBF[e.src] + e.w)
-                return false;
-        }
-        return true;
-    };
-
-    void printBellmanFordPath(int i) {
-        if (this->parBF[i] == imin)
-            return;
-        printBellmanFordPath(this->parBF[i]);
-        cout << i << " ";
-    }
-
     void bellmanFord(vector<Edge>& edges, int s) {
         cout << nl << "Bellman Ford Algorithm:" << nl;
+        cout << "Warning! BellmanFord algorithm works only for directed graphs!\n";
         bool hasNegativeCycle = !bellmanFordUtil(edges, s);
 
         if (hasNegativeCycle) {
             cout << "Given graph has negative cycle." << nl;
         } else {
-            FOR(i, nVertices) {
+            FOR(i, this->nVertices) {
                 cout << "Destination: " << i << " Path: " << s << " ";
-                printBellmanFordPath(i);
+                printPathParent(this->parBF, i);
                 cout << " Minimum Distance: " << this->distBF[i] << nl;
             }
         }
     }
 
-    void dagShortest() {};  // uses topological sorting
-    void dijkstra() {};
+    void dagShortest(int s) {
+        cout << nl << "DAG Shortest Path:" << nl;
+        cout << "Warning! DAG shortest path algorithm works only for directed acyclic graphs!\n";
+
+        if (!ranDFS) {
+            cout << "Run DFS to compute the topological sort order." << nl;
+        } else {
+            initializeSingleSource(this->distDAG, this->parDAG, s);
+
+            trav(u, this->topologicalOrder) {
+                trav(p, this->adjL[u]) {
+                    relax(this->distDAG, this->parDAG, u, p.first, p.second);
+                }
+            }
+            FOR(i, nVertices) {
+                cout << "Destination: " << i << " Path: " << s << " ";
+                printPathParent(this->parDAG, i);
+                cout << " Minimum Distance: " << this->distDAG[i] << nl;
+            }
+        }
+    };
+
+    void dijkstra(int s) {
+        cout << nl << "Dijkstra's algorithm:" << nl;
+        cout << "Warning! Dijkstra's algorithm works only for directed graphs with nonnegative weights!\n";
+
+        int u, v, w;
+        priority_queue<pi, vpi, greater<pi> > pq;
+
+        this->distDIJ.resize(this->nVertices, imax);
+        this->parDIJ.resize(this->nVertices, imin);
+
+        pq.push(make_pair(0, s));
+        this->distDIJ[s] = 0;
+
+        while (!pq.empty()) {
+            u = pq.top().second; pq.pop();
+
+            trav(x, this->adjL[u]) {
+                v = x.first;
+                w = x.second;
+
+                if (this->distDIJ[v] > this->distDIJ[u] + w) {
+                    this->distDIJ[v] = this->distDIJ[u] + w;
+                    pq.push(make_pair(this->distDIJ[v], v));
+                    this->parDIJ[v] = u;
+                }
+            }
+        }
+
+        FOR(i, this->nVertices) {
+            cout << "Destination: " << i << " Path: " << s << " ";
+            printPathParent(this->parDIJ, i);
+            cout << " Minimum Distance: " << this->distDIJ[i] << nl;
+        }
+    };
+
     void floydWarshall() {};
 };
 
@@ -395,7 +428,7 @@ int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int nVertices, nEdges, srcForBFS, shortestPathBFSDest, dir, srcForPrim, srcForBF;
+    int nVertices, nEdges, srcForTraversal, shortestPathBFSDest, dir;
     cin >> nVertices >> nEdges;
 
     vector<Edge> edges(nEdges);
@@ -407,25 +440,22 @@ int main() {
     Graph G(edges, nVertices, dir);
     G.displayAdjacencyList();
 
-    cin >> srcForBFS;
-    G.BFS(srcForBFS);
+    cin >> srcForTraversal;
+    G.BFS(srcForTraversal);
 
     cin >> shortestPathBFSDest;
-    G.shortestPathBFS(srcForBFS, shortestPathBFSDest);
+    G.shortestPathBFS(srcForTraversal, shortestPathBFSDest);
 
     G.DFS();
     G.topologicalSort();
 
     G.kruskal(edges);
+    G.prim(srcForTraversal);
 
-    cin >> srcForPrim;
-    G.prim(srcForPrim);
+    G.bellmanFord(edges, srcForTraversal);
+    G.dagShortest(srcForTraversal);
+    G.dijkstra(srcForTraversal);
 
-    cin >> srcForBF;
-    G.bellmanFord(edges, srcForBF);
-
-    G.dagShortest();
-    G.dijkstra();
     G.floydWarshall();
 
 #ifdef _GLIBCXX_DEBUG
