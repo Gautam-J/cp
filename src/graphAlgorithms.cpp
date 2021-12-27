@@ -74,9 +74,11 @@ private:
     bool directed = false, ranBFS = false, ranDFS = false;
     int nVertices, timeDFS = 0;
     vector<vpi> adjL;
+    vvi adjM;
 
     vector<bool> visitedBFS, visitedDFS;
     vi distBFS, parBFS, discoverDFS, finishDFS, parDFS, root, distBF, parBF, distDAG, parDAG, distDIJ, parDIJ;
+    vector<vvi> distFW;
 
     list<int> topologicalOrder;
 
@@ -174,6 +176,25 @@ private:
         cout << i << " ";
     }
 
+    void constructAdjacencyMatrix() {
+        this->adjM.resize(this->nVertices);
+        trav(v, this->adjM)
+            v.resize(this->nVertices, imax);
+
+        FOR(i, this->nVertices) {
+            FOR(j, this->nVertices) {
+                if (i == j)
+                    this->adjM[i][j] = 0;
+            }
+        }
+
+        FOR(u, this->nVertices) {
+            trav(e, this->adjL[u]) {
+                this->adjM[u][e.first] = e.second;
+            }
+        }
+    }
+
 public:
 
     Graph(vector<Edge>& edges, int nv, bool dir = false) {
@@ -183,6 +204,8 @@ public:
         adjL.resize(this->nVertices);
         trav(i, edges)
             this->addEdge(i);
+
+        constructAdjacencyMatrix();
     }
 
     void displayAdjacencyList() {
@@ -194,6 +217,20 @@ public:
             trav(v, this->adjL[j])
                 cout << " -> " << v.first << "(" << v.second << ")";
 
+            cout << nl;
+        }
+    }
+
+    void displayAdjacencyMatrix() {
+        cout << nl << "Adjacency Matrix:" << nl;
+
+        FOR(i, this->nVertices) {
+            FOR(j, this->nVertices) {
+                if (this->adjM[i][j] == imax)
+                    cout << "F" << "   ";
+                else
+                    cout << this->adjM[i][j] << "   ";
+            }
             cout << nl;
         }
     }
@@ -421,7 +458,49 @@ public:
         }
     };
 
-    void floydWarshall() {};
+    void floydWarshall() {
+        cout << nl << "Floyd Warshall Algorithm" << nl;
+        cout << "Warning! Floyd Warshall algorithm works only for directed graphs with no negative-weight cycles!\n";
+
+        this->distFW.resize(this->nVertices + 1);
+        trav(u, this->distFW) {
+            u.resize(this->nVertices);
+            trav(v, u) {
+                v.resize(this->nVertices, imax);
+            }
+        }
+
+        this->distFW[0].assign(all(this->adjM));
+
+        for (int k = 1; k <= this->nVertices; k++) {
+            FOR(i, this->nVertices) {
+                FOR(j, this->nVertices) {
+
+                    if (this->distFW[k - 1][i][j] >
+                        (this->distFW[k - 1][i][k - 1] + this->distFW[k - 1][k - 1][j]) &&
+                        (this->distFW[k - 1][k - 1][j] != imax) &&
+                        (this->distFW[k - 1][i][k - 1] != imax)) {
+                        this->distFW[k][i][j] = this->distFW[k - 1][i][k - 1] + this->distFW[k - 1][k - 1][j];
+                    } else {
+                        this->distFW[k][i][j] = this->distFW[k - 1][i][j];
+                    }
+
+                }
+            }
+        }
+
+        cout << "All pairs Shortest distance" << nl;
+        FOR(i, this->nVertices) {
+            FOR(j, this->nVertices) {
+                if (this->distFW[this->nVertices][i][j] == imax)
+                    cout << "F" << "   ";
+                else
+                    cout << this->distFW[this->nVertices][i][j] << "   ";
+            }
+            cout << nl;
+        }
+
+    };
 };
 
 int main() {
@@ -439,6 +518,7 @@ int main() {
     cin >> dir;
     Graph G(edges, nVertices, dir);
     G.displayAdjacencyList();
+    G.displayAdjacencyMatrix();
 
     cin >> srcForTraversal;
     G.BFS(srcForTraversal);
