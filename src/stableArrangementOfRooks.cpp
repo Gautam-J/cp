@@ -1,4 +1,4 @@
-
+/* CF - 800 */
 /*
 A. Stable Arrangement of Rooks
 time limit per test1 second

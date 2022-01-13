@@ -1,4 +1,4 @@
-
+/* CF - 1500 */
 /*
 B. Integers Shop
 time limit per test2 seconds
