@@ -43,9 +43,6 @@ typedef vector<int> vi;
 typedef vector< vi > vvi;
 typedef vector< pi > vpi;
 
-// mt19937_64 for 64 bit random numbers
-mt19937 mt_rand(chrono::high_resolution_clock::now().time_since_epoch().count());
-
 const char nl = '\n';
 const double PI = acos(-1);
 
