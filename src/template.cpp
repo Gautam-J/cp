@@ -9,9 +9,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#pragma GCC optimize("Ofast,unroll-loops")
-#pragma GCC target("avx,avx2,fma")
-
 void dbg_out() { cerr << endl; }
 template<typename A, typename B> ostream& operator<<(ostream &os, const pair<A, B> &p) { return os << '(' << p.first << ", " << p.second << ')'; }
 template<typename T_container, typename T = typename enable_if<!is_same<T_container, string>::value, typename T_container::value_type>::type> ostream& operator<<(ostream &os, const T_container &v) { os << '{'; string sep; for (const T &x : v) os << sep << x, sep = ", "; return os << '}'; }
@@ -42,6 +39,9 @@ typedef pair<int, int> pi;
 typedef vector<int> vi;
 typedef vector< vi > vvi;
 typedef vector< pi > vpi;
+
+// mt19937_64 for 64 bit random numbers
+mt19937 mt_rand(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 const char nl = '\n';
 const double PI = acos(-1);
