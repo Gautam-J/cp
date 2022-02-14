@@ -17,10 +17,11 @@ template<typename Head, typename... Tail> void dbg_out(Head H, Tail... T) { cerr
 template<typename T> T gcd(T a, T b) { return ( b ? __gcd(a, b) : a); }
 template<typename T> T lcm(T a, T b) { return (a * (b / gcd(a, b))); }
 
-#define FOR(i, n) for (int i = 0; i < n; i++)
+#define forn(i, n) for (int i = 0; i < n; i++)
+#define fore(i, l, r) for (int i = (int)l; i <= (int)r; i++)
+#define trav(i, a) for (auto& i : a)
 #define all(a) a.begin(), a.end()
 #define sz(x) (int)(x).size()
-#define trav(i, a) for (auto& i : a)
 #define pb push_back
 #define SHUF(v) shuffle(all(v), mt_rand)
 #define umap unordered_map
@@ -35,6 +36,7 @@ template<typename T> T lcm(T a, T b) { return (a * (b / gcd(a, b))); }
 #endif
 
 typedef long long ll;
+typedef long double ld;
 typedef pair<int, int> pi;
 typedef vector<int> vi;
 typedef vector< vi > vvi;
@@ -44,7 +46,7 @@ typedef vector< pi > vpi;
 mt19937 mt_rand(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 const char nl = '\n';
-const double PI = acos(-1);
+const ld PI = acos(-1.0);
 
 int main() {
     ios_base::sync_with_stdio(false);
