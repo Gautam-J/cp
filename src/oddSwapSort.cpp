@@ -1,6 +1,163 @@
 
 /*
+B. Odd Swap Sort
+time limit per test1 second
+memory limit per test256 megabytes
+inputstandard input
+outputstandard output
+You are given an array ??1,??2,É,????
+a
+1
+,
+a
+2
+,
+É
+,
+a
+n
+. You can perform operations on the array. In each operation you can choose an integer ??
+i
+ (1²??<??
+1
+²
+i
+<
+n
+), and swap elements ????
+a
+i
+ and ????+1
+a
+i
++
+1
+ of the array, if ????+????+1
+a
+i
++
+a
+i
++
+1
+ is odd.
 
+Determine whether it can be sorted in non-decreasing order using this operation any number of times.
+
+Input
+Each test contains multiple test cases. The first line contains a single integer ??
+t
+ (1²??²105
+1
+²
+t
+²
+10
+5
+) Ñ the number of test cases. Description of the test cases follows.
+
+The first line of each test case contains a single integer ??
+n
+ (1²??²105
+1
+²
+n
+²
+10
+5
+) Ñ the length of the array.
+
+The second line of each test case contains ??
+n
+ integers ??1,??2,É,????
+a
+1
+,
+a
+2
+,
+É
+,
+a
+n
+ (1²????²109
+1
+²
+a
+i
+²
+10
+9
+) Ñ the elements of the array.
+
+It is guaranteed that the sum of ??
+n
+ over all test cases does not exceed 2?105
+2
+?
+10
+5
+.
+
+Output
+For each test case, print "Yes" or "No" depending on whether you can or can not sort the given array.
+
+You may print each letter in any case (for example, "YES", "Yes", "yes", "yEs" will all be recognized as positive answer).
+
+Example
+inputCopy
+4
+4
+1 6 31 14
+2
+4 2
+5
+2 9 6 7 10
+3
+6 6 6
+outputCopy
+Yes
+No
+No
+Yes
+Note
+In the first test case, we can simply swap 31
+31
+ and 14
+14
+ (31+14=45
+31
++
+14
+=
+45
+ which is odd) and obtain the non-decreasing array [1,6,14,31]
+[
+1
+,
+6
+,
+14
+,
+31
+]
+.
+
+In the second test case, the only way we could sort the array is by swapping 4
+4
+ and 2
+2
+, but this is impossible, since their sum 4+2=6
+4
++
+2
+=
+6
+ is even.
+
+In the third test case, there is no way to make the array non-decreasing.
+
+In the fourth test case, the array is already non-decreasing.
 */
 
 /* Time Complexity: O(n) */

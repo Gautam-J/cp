@@ -1,6 +1,6 @@
 
 /*
-A. Reverse
+C. Inversion Graph
 time limit per test1 second
 memory limit per test256 megabytes
 inputstandard input
@@ -16,82 +16,31 @@ p
 ,
 p
 n
- of length ??
-n
-. You have to choose two integers ??,??
-l
-,
-r
- (1²??²??²??
-1
-²
-l
-²
-r
-²
-n
-) and reverse the subsegment [??,??]
-[
-l
-,
-r
-]
- of the permutation. The permutation will become ??1,??2,É,?????1,????,?????1,É,????,????+1,????+2,É,????
-p
-1
-,
-p
-2
-,
-É
-,
-p
-l
-?
-1
-,
-p
-r
-,
-p
-r
-?
-1
-,
-É
-,
-p
-l
-,
-p
-r
-+
-1
-,
-p
-r
-+
-2
-,
-É
-,
-p
-n
-.
-
-Find the lexicographically smallest permutation that can be obtained by performing exactly one reverse operation on the initial permutation.
-
-Note that for two distinct permutations of equal length ??
-a
- and ??
-b
+. Then, an undirected graph is constructed in the following way: add an edge between vertices ??
+i
 , ??
-a
- is lexicographically smaller than ??
-b
- if at the first position they differ, ??
-a
- has the smaller element.
+j
+ such that ??<??
+i
+<
+j
+ if and only if ????>????
+p
+i
+>
+p
+j
+. Your task is to count the number of connected components in this graph.
+
+Two vertices ??
+u
+ and ??
+v
+ belong to the same connected component if and only if there is at least one path along edges connecting ??
+u
+ and ??
+v
+.
 
 A permutation is an array consisting of ??
 n
@@ -140,22 +89,24 @@ n
 Input
 Each test contains multiple test cases. The first line contains a single integer ??
 t
- (1²??²500
+ (1²??²105
 1
 ²
 t
 ²
-500
+10
+5
 ) Ñ the number of test cases. Description of the test cases follows.
 
 The first line of each test case contains a single integer ??
 n
- (1²??²500
+ (1²??²105
 1
 ²
 n
 ²
-500
+10
+5
 ) Ñ the length of the permutation.
 
 The second line of each test case contains ??
@@ -180,93 +131,44 @@ i
 n
 ) Ñ the elements of the permutation.
 
+It is guaranteed that the sum of ??
+n
+ over all test cases does not exceed 2?105
+2
+?
+10
+5
+.
+
 Output
-For each test case print the lexicographically smallest permutation you can obtain.
+For each test case, print one integer ??
+k
+ Ñ the number of connected components.
 
 Example
 inputCopy
-4
-1
-1
+6
 3
-2 1 3
-4
-1 4 2 3
-5
-1 2 3 4 5
-outputCopy
-1
 1 2 3
-1 2 4 3
-1 2 3 4 5
-Note
-In the first test case, the permutation has length 1
-1
-, so the only possible segment is [1,1]
-[
-1
-,
-1
-]
-. The resulting permutation is [1]
-[
-1
-]
-.
-
-In the second test case, we can obtain the identity permutation by reversing the segment [1,2]
-[
-1
-,
-2
-]
-. The resulting permutation is [1,2,3]
-[
-1
-,
-2
-,
-3
-]
-.
-
-In the third test case, the best possible segment is [2,3]
-[
-2
-,
-3
-]
-. The resulting permutation is [1,2,4,3]
-[
-1
-,
-2
-,
-4
-,
-3
-]
-.
-
-In the fourth test case, there is no lexicographically smaller permutation, so we can leave it unchanged by choosing the segment [1,1]
-[
-1
-,
-1
-]
-. The resulting permutation is [1,2,3,4,5]
-[
-1
-,
-2
-,
-3
-,
-4
-,
 5
-]
-.
+2 1 4 3 5
+6
+6 1 4 2 5 3
+1
+1
+6
+3 2 1 6 5 4
+5
+3 1 5 2 4
+outputCopy
+3
+3
+1
+1
+2
+1
+Note
+Each separate test case is depicted in the image below. The colored squares represent the elements of the permutation. For one permutation, each color represents some connected component. The number of distinct colors is the answer.
 */
 
 /* Time Complexity: O(n) */
@@ -283,10 +185,11 @@ template<typename Head, typename... Tail> void dbg_out(Head H, Tail... T) { cerr
 template<typename T> T gcd(T a, T b) { return ( b ? __gcd(a, b) : a); }
 template<typename T> T lcm(T a, T b) { return (a * (b / gcd(a, b))); }
 
-#define FOR(i, n) for (int i = 0; i < n; i++)
+#define forn(i, n) for (int i = 0; i < n; i++)
+#define fore(i, l, r) for (int i = (int)l; i <= (int)r; i++)
+#define trav(i, a) for (auto& i : a)
 #define all(a) a.begin(), a.end()
 #define sz(x) (int)(x).size()
-#define trav(i, a) for (auto& i : a)
 #define pb push_back
 #define SHUF(v) shuffle(all(v), mt_rand)
 #define umap unordered_map
@@ -301,6 +204,7 @@ template<typename T> T lcm(T a, T b) { return (a * (b / gcd(a, b))); }
 #endif
 
 typedef long long ll;
+typedef long double ld;
 typedef pair<int, int> pi;
 typedef vector<int> vi;
 typedef vector< vi > vvi;
@@ -310,31 +214,19 @@ typedef vector< pi > vpi;
 mt19937 mt_rand(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 const char nl = '\n';
-const double PI = acos(-1);
+/* const ld PI = acos(-1.0); */
 
-void solve(vi& a) {
-    int n = sz(a), l = 0, r = 0;
-    for (int i = 0; i < n; i++) {
-        if (a[i] != i + 1) {
-            l = i;
-            break;
-        }
+int solve(vi& a) {
+    int n = sz(a);
+    int maxEl = 0, cnt = 0;
+
+    forn(i, n) {
+        maxEl = max(maxEl, a[i]);
+        if (maxEl == i + 1)
+            cnt++;
     }
 
-    for (int i = l; i < n; i++) {
-        if (a[i] == l + 1) {
-            r = i;
-            break;
-        }
-    }
-
-    for (int i = 0; i < l; i++)
-        cout << a[i] << " ";
-    for (int i = r; i >= l; i--)
-        cout << a[i] << " ";
-    for (int i = r + 1; i < n; i++)
-        cout << a[i] << " ";
-    cout << nl;
+    return cnt;
 }
 
 int main() {
@@ -350,7 +242,7 @@ int main() {
         trav(i, a)
             cin >> i;
 
-        solve(a);
+        cout << solve(a) << nl;
     }
 
 #ifdef _GLIBCXX_DEBUG
