@@ -20,7 +20,7 @@ template<typename T> T lcm(T a, T b) { return (a * (b / gcd(a, b))); }
 #define forn(i, n) for (int i = 0; i < n; i++)
 #define fore(i, l, r) for (int i = (int)l; i <= (int)r; i++)
 #define trav(i, a) for (auto& i : a)
-#define all(a) a.begin(), a.end()
+#define allit(a) a.begin(), a.end()
 #define sz(x) (int)(x).size()
 #define pb push_back
 #define SHUF(v) shuffle(all(v), mt_rand)
