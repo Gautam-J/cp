@@ -1,4 +1,4 @@
-
+/* CF - 1100 */
 /*
 B. Odd Swap Sort
 time limit per test1 second

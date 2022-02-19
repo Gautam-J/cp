@@ -1,4 +1,4 @@
-
+/* CF - 800 */
 /*
 A. Reverse
 time limit per test1 second

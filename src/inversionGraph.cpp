@@ -1,4 +1,4 @@
-
+/* CF - 1300 */
 /*
 C. Inversion Graph
 time limit per test1 second
