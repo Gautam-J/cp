@@ -1,4 +1,4 @@
-
+/* CF - 800 */
 /*
 B. Avoid Local Maximums
 time limit per test2 seconds

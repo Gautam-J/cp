@@ -1,4 +1,4 @@
-
+/* CF - 800 */
 /*
 A. Min Or Sum
 time limit per test1 second
