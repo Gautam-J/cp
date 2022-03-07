@@ -1,4 +1,4 @@
-
+/* CR - 900 */
 /*
 B. Power Walking
 time limit per test2 seconds

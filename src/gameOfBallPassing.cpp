@@ -193,23 +193,19 @@ const char nl = '\n';
 /* const ld PI = acos(-1.0); */
 
 ll solve(vector<ll>& a) {
-    ll n = sz(a);
     ll sum = 0;
     trav(i, a)
         sum += i;
 
-    sort(allit(a));
-    sum -= a[n - 1];
-    sum++;
-
-    if (a[n - 1] == 0)
+    if (sum == 0)
         return 0;
 
-    ll ans = a[n - 1] - sum;
-    if (ans >= 0)
-        return ans + 1;
+    ll maxElement = *max_element(allit(a));
 
-    return 1;
+    if (maxElement * 2 <= sum)
+        return 1;
+
+    return (2 * maxElement) - sum;
 }
 
 int main() {

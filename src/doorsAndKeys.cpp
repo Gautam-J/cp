@@ -1,4 +1,4 @@
-
+/* CR - 800 */
 /*
 A. Doors and Keys
 time limit per test2 seconds

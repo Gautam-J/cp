@@ -1,4 +1,4 @@
-
+/* CR - 800 */
 /*
 A. Hard Way
 time limit per test1 second

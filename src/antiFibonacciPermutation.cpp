@@ -1,4 +1,4 @@
-
+/* CR - 800 */
 /*
 B. Anti-Fibonacci Permutation
 time limit per test2 seconds
