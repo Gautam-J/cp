@@ -22,10 +22,10 @@ int partition(vector<int>& arr, int low, int high) {
             i++;
         while (arr[i] < pivot);  // arr[i] > pivot for desc
 
-        if (i < j)
-            swap(arr[i], arr[j]);
-        else
+        if (i >= j)
             return j;  // q
+
+        swap(arr[i], arr[j]);
     }
 }
 

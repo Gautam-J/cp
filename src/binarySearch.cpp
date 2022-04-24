@@ -22,7 +22,7 @@ int binarySearch(vector<int>& arr, int v, int low, int high) {
     if (v < arr[mid])
         return binarySearch(arr, v, low, mid - 1);
 
-    return -1; // unneccesary, just to ignore warnings
+    return -1; // unneccesary, just to ignore warnings, or make the v == arr[mid] case as default
 }
 
 int binarySearchIterative(vector<int>& arr, int v, int low, int high) {

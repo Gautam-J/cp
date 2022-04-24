@@ -34,7 +34,7 @@ numbers is sorted in non-decreasing order.
 The tests are generated such that there is exactly one solution.
 */
 
-/* Time Complexity: O(log n) */
+/* Time Complexity: O(n) */
 /* Space Complexity: O(1) */
 
 #include <bits/stdc++.h>
