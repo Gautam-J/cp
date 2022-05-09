@@ -7,8 +7,3 @@ Questions from sources:
 - [Codeforces](https://codeforces.com/)
 - [Leetcode](https://leetcode.com/)
 - [Kickstart](https://codingcompetitions.withgoogle.com/kickstart)
-
-> Quick note on the notation used for time and space complexity:
-> Big O notation is written, however it (here) represents a meaning same as Big Theta.
-
-$$O(n)=\Theta(n)$$
