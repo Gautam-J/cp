@@ -121,10 +121,13 @@ bool sieveOfEratosthenes(int n) {
     bool primes[n + 1];
     memset(primes, true, sizeof(primes));
 
-    for (int i = 2; i * i < n; i++) {
+    primes[0] = false;
+    primes[1] = false;
+
+    for (int i = 2; i * i <= n; i++) {
         if (primes[i]) {
             // update all multiples of i, starting from square of i, to n
-            for (int j = i * i; j < n; j += i)
+            for (int j = i * i; j <= n; j += i)
                 primes[j] = false;
         }
     }
