@@ -127,8 +127,8 @@ In Sample Case #2, the old password does not satisfy requirements 1
 In Sample Case #3, the old password already meets all the requirements so Charles does not have to change his password.
 */
 
-/* Time Complexity: O() */
-/* Space Complexity: O() */
+/* Time Complexity: O(n) */
+/* Space Complexity: O(1) */
 
 #include <bits/stdc++.h>
 #include <cctype>

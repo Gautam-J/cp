@@ -5,8 +5,8 @@ Given a string of English letters s, return the greatest English letter which oc
 An English letter b is greater than another letter a if b appears after a in the English alphabet.
 */
 
-/* Time Complexity: O() */
-/* Space Complexity: O() */
+/* Time Complexity: O(n) */
+/* Space Complexity: O(n) even if its (n) max is 52, which is relatively small */
 
 #include <bits/stdc++.h>
 #include <bitset>
