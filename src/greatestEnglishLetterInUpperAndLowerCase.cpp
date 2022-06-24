@@ -52,6 +52,12 @@ const char nl = '\n';
 /* const ld PI = acos(-1.0); */
 
 string solve1(string& s) {
+    // Algorithm:
+    // Insert all elements into a set.
+    // From the last alphabet, i.e., z, check if i and I are both present in the set.
+    // If so, simply return I.
+    // After the for loop, return an empty string.
+    //
     // Time: O(n)
     // Space: O(n)
 
