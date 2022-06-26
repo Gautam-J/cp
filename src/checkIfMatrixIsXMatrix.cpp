@@ -1,33 +1,39 @@
-// LC - Easy, grind 4
+/* LC - Easy */
 /*
-You are given an array prices where prices[i] is the price of a given stock on the ith day.
+A square matrix is said to be an X-Matrix if both of the following conditions hold:
 
-You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock.
-
-Return the maximum profit you can achieve from this transaction. If you cannot achieve any profit, return 0.
+All the elements in the diagonals of the matrix are non-zero.
+All other elements are 0.
+Given a 2D integer array grid of size n x n representing a square matrix, return true if grid is an X-Matrix. Otherwise, return false.
 
 
 
 Example 1:
 
-Input: prices = [7,1,5,3,6,4]
-Output: 5
-Explanation: Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.
-Note that buying on day 2 and selling on day 1 is not allowed because you must buy before you sell.
+
+Input: grid = [[2,0,0,1],[0,3,1,0],[0,5,2,0],[4,0,0,2]]
+Output: true
+Explanation: Refer to the diagram above.
+An X-Matrix should have the green elements (diagonals) be non-zero and the red elements be 0.
+Thus, grid is an X-Matrix.
 Example 2:
 
-Input: prices = [7,6,4,3,1]
-Output: 0
-Explanation: In this case, no transactions are done and the max profit = 0.
+
+Input: grid = [[5,7,0],[0,3,1],[0,5,0]]
+Output: false
+Explanation: Refer to the diagram above.
+An X-Matrix should have the green elements (diagonals) be non-zero and the red elements be 0.
+Thus, grid is not an X-Matrix.
 
 
 Constraints:
 
-1 <= prices.length <= 105
-0 <= prices[i] <= 104
+n == grid.length == grid[i].length
+3 <= n <= 100
+0 <= grid[i][j] <= 105
 */
 
-/* Time Complexity: O(n) */
+/* Time Complexity: O(n^2) */
 /* Space Complexity: O(1) */
 
 #include <bits/stdc++.h>
@@ -72,29 +78,29 @@ mt19937 mt_rand(chrono::high_resolution_clock::now().time_since_epoch().count())
 const char nl = '\n';
 /* const ld PI = acos(-1.0); */
 
-int solve(vi& a) {
+bool solve(vvi& grid) {
     // Algorithm:
-    // Have a variable maxProfit to keep track of the max maxProfit
-    // Let minPrice = INT_MAX
-    // iterate through the array,
-    // if a[i] < minPrice, then minPrice = a[i]
-    // else if (p[i] - minPrice > maxProfit), maxProfit = p[i] - minPrice
-    // return maxProfit
+    // Iterate through the matrix
+    // major diagonal elements will be when i == j
+    // minor diagonal elements will be when j == n - i - 1
+    // if diagonal elements are zero, return false
+    // if other elements are non-zero, return false
+    // finally return true
     //
-    // Time: O(n)
+    // Time: O(n^2)
     // Space: O(1)
 
-    int n = (int)a.size(), localProfit;
-    int globalProfit = 0, minPrice = INT_MAX;
-
+    int n = grid.size();
     for (int i = 0; i < n; ++i) {
-        minPrice = min(minPrice, a[i]);
-
-        localProfit = a[i] - minPrice;
-        globalProfit = max(globalProfit, localProfit);
+        for (int j = 0; j < n; ++j) {
+            if (i == j || j == n - i - 1) {
+                if (grid[i][j] == 0)
+                    return false;
+            } else if (grid[i][j] != 0)
+                return false;
+        }
     }
-
-    return globalProfit;
+    return true;
 }
 
 int main() {
@@ -103,11 +109,13 @@ int main() {
 
     int n;
     cin >> n;
-    vi a(n);
-    trav(i, a)
-        cin >> i;
+    vvi grid(n, vi(n));
+    trav(i, grid) {
+        trav(j, i)
+            cin >> j;
+    }
 
-    cout << solve(a) << nl;
+    cout << (solve(grid) ? "YES" : "NO") << nl;
 
 #ifdef _GLIBCXX_DEBUG
     cerr << endl << "finished in " << clock() * 1.0 / CLOCKS_PER_SEC << " sec" << endl;

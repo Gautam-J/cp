@@ -1,8 +1,10 @@
-/* LC - Easy */
+/* LC - Easy, grind 5 */
 /*
 A phrase is a palindrome if, after converting all uppercase letters into lowercase letters and removing all non-alphanumeric characters, it reads the same forward and backward. Alphanumeric characters include letters and numbers.
 
 Given a string s, return true if it is a palindrome, or false otherwise.
+
+
 
 Example 1:
 
@@ -42,8 +44,8 @@ template<typename Head, typename... Tail> void dbg_out(Head H, Tail... T) { cerr
 template<typename T> T gcd(T a, T b) { return ( b ? __gcd(a, b) : a); }
 template<typename T> T lcm(T a, T b) { return (a * (b / gcd(a, b))); }
 
-#define forn(i, n) for (int i = 0; i < n; i++)
-#define fore(i, l, r) for (int i = (int)l; i <= (int)r; i++)
+#define forn(i, n) for (int i = 0; i < n; ++i)
+#define fore(i, l, r) for (int i = (int)l; i <= (int)r; ++i)
 #define trav(i, a) for (auto& i : a)
 #define allit(a) a.begin(), a.end()
 #define sz(x) (int)(x).size()
@@ -74,25 +76,36 @@ const char nl = '\n';
 /* const ld PI = acos(-1.0); */
 
 bool solve(string& s) {
-    string res;
-    trav(i, s) {
-        if (isalnum(i))
-            res.push_back(i);
-    }
+    // Algorithm:
+    // Have two pointers, low = 0, high = n - 1
+    // Iterate through given string, check if alpha numeric
+    // check if res[low] == res[high], low++, high--;
+    //
+    // tolower() returns the char as it is if already in lowercase
+    // tolower() returns digits and punctuations as it is
+    //
+    // Time: O(n)
+    // Space: O(1)
 
-    trav(i, res) {
-        if (isupper(i))
-            i = tolower(i);
-    }
+    int n = (int)s.size();
+    int low = 0, high = n - 1;
+    while (low <= high) {
+        if (!isalnum(s[low])) {
+            low++;
+            continue;
+        }
 
-    int low = 0, high = res.size() - 1;
-    while (low < high) {
-        if (res.at(low) != res.at(high))
+        if (!isalnum(s[high])) {
+            high--;
+            continue;
+        }
+
+        if (tolower(s[low]) != tolower(s[high]))
             return false;
+
         low++;
         high--;
     }
-
     return true;
 }
 
@@ -101,7 +114,7 @@ int main() {
     cin.tie(nullptr);
 
     string s;
-    getline(cin, s);
+    cin >> s;
     cout << (solve(s) ? "YES" : "NO") << nl;
 
 #ifdef _GLIBCXX_DEBUG

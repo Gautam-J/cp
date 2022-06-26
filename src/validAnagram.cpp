@@ -1,33 +1,31 @@
-// LC - Easy, grind 4
+/* LC - Easy, grind 7 */
 /*
-You are given an array prices where prices[i] is the price of a given stock on the ith day.
+Given two strings s and t, return true if t is an anagram of s, and false otherwise.
 
-You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock.
-
-Return the maximum profit you can achieve from this transaction. If you cannot achieve any profit, return 0.
+An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.
 
 
 
 Example 1:
 
-Input: prices = [7,1,5,3,6,4]
-Output: 5
-Explanation: Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.
-Note that buying on day 2 and selling on day 1 is not allowed because you must buy before you sell.
+Input: s = "anagram", t = "nagaram"
+Output: true
 Example 2:
 
-Input: prices = [7,6,4,3,1]
-Output: 0
-Explanation: In this case, no transactions are done and the max profit = 0.
+Input: s = "rat", t = "car"
+Output: false
 
 
 Constraints:
 
-1 <= prices.length <= 105
-0 <= prices[i] <= 104
+1 <= s.length, t.length <= 5 * 104
+s and t consist of lowercase English letters.
+
+
+Follow up: What if the inputs contain Unicode characters? How would you adapt your solution to such a case?
 */
 
-/* Time Complexity: O(n) */
+/* Time Complexity: O(n + m) */
 /* Space Complexity: O(1) */
 
 #include <bits/stdc++.h>
@@ -72,42 +70,37 @@ mt19937 mt_rand(chrono::high_resolution_clock::now().time_since_epoch().count())
 const char nl = '\n';
 /* const ld PI = acos(-1.0); */
 
-int solve(vi& a) {
+bool solve(string& s, string& t) {
     // Algorithm:
-    // Have a variable maxProfit to keep track of the max maxProfit
-    // Let minPrice = INT_MAX
-    // iterate through the array,
-    // if a[i] < minPrice, then minPrice = a[i]
-    // else if (p[i] - minPrice > maxProfit), maxProfit = p[i] - minPrice
-    // return maxProfit
+    // Create an array to be used as a hashmap
+    // For every char in s, increment char count;
+    // For every char in t, decrement char count;
+    // Finally, if any char count is not 0, then it is not an anagram
     //
-    // Time: O(n)
+    //
+    // Time: O(n + m)
     // Space: O(1)
 
-    int n = (int)a.size(), localProfit;
-    int globalProfit = 0, minPrice = INT_MAX;
+    int hm[26] = { 0 };
+    for (const char& c : s)
+        hm[c - 'a']++;
+    for (const char& c : t)
+        hm[c - 'a']--;
 
-    for (int i = 0; i < n; ++i) {
-        minPrice = min(minPrice, a[i]);
+    for (int i = 0; i < 26; i++)
+        if (hm[i] != 0)
+            return false;
 
-        localProfit = a[i] - minPrice;
-        globalProfit = max(globalProfit, localProfit);
-    }
-
-    return globalProfit;
+    return true;
 }
 
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int n;
-    cin >> n;
-    vi a(n);
-    trav(i, a)
-        cin >> i;
-
-    cout << solve(a) << nl;
+    string s, t;
+    cin >> s >> t;
+    cout << (solve(s, t) ? "YES" : "NO") << nl;
 
 #ifdef _GLIBCXX_DEBUG
     cerr << endl << "finished in " << clock() * 1.0 / CLOCKS_PER_SEC << " sec" << endl;

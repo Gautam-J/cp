@@ -30,8 +30,8 @@ The number of nodes in both lists is in the range [0, 50].
 Both list1 and list2 are sorted in non-decreasing order.
 */
 
-/* Time Complexity: O() */
-/* Space Complexity: O() */
+/* Time Complexity: O(n + m) */
+/* Space Complexity: O(1) */
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -100,7 +100,7 @@ ListNode* solve1(ListNode* list1, ListNode* list2) {
     // return head
     //
     // Time: O(n + m)
-    // Space: O(n + m)
+    // Space: O(1)
 
     if (!list1)
         return list2;

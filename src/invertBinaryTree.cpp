@@ -1,34 +1,33 @@
-// LC - Easy, grind 4
+/* LC - Easy, grind 6 */
 /*
-You are given an array prices where prices[i] is the price of a given stock on the ith day.
-
-You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock.
-
-Return the maximum profit you can achieve from this transaction. If you cannot achieve any profit, return 0.
+Given the root of a binary tree, invert the tree, and return its root.
 
 
 
 Example 1:
 
-Input: prices = [7,1,5,3,6,4]
-Output: 5
-Explanation: Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.
-Note that buying on day 2 and selling on day 1 is not allowed because you must buy before you sell.
+
+Input: root = [4,2,7,1,3,6,9]
+Output: [4,7,2,9,6,3,1]
 Example 2:
 
-Input: prices = [7,6,4,3,1]
-Output: 0
-Explanation: In this case, no transactions are done and the max profit = 0.
+
+Input: root = [2,1,3]
+Output: [2,3,1]
+Example 3:
+
+Input: root = []
+Output: []
 
 
 Constraints:
 
-1 <= prices.length <= 105
-0 <= prices[i] <= 104
+The number of nodes in the tree is in the range [0, 100].
+-100 <= Node.val <= 100
 */
 
 /* Time Complexity: O(n) */
-/* Space Complexity: O(1) */
+/* Space Complexity: O(n) */
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -72,42 +71,43 @@ mt19937 mt_rand(chrono::high_resolution_clock::now().time_since_epoch().count())
 const char nl = '\n';
 /* const ld PI = acos(-1.0); */
 
-int solve(vi& a) {
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode() : val(0), left(nullptr), right(nullptr) {}
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+    TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+};
+
+TreeNode* solve(TreeNode* root) {
     // Algorithm:
-    // Have a variable maxProfit to keep track of the max maxProfit
-    // Let minPrice = INT_MAX
-    // iterate through the array,
-    // if a[i] < minPrice, then minPrice = a[i]
-    // else if (p[i] - minPrice > maxProfit), maxProfit = p[i] - minPrice
-    // return maxProfit
+    // Apply DFS (or BFS also)
+    // If root is null, return null
+    // Else, swap root->left with root->right
+    // recursively call func with root->left, root->right
     //
     // Time: O(n)
-    // Space: O(1)
+    // Space: O(n)
 
-    int n = (int)a.size(), localProfit;
-    int globalProfit = 0, minPrice = INT_MAX;
+    if (root == nullptr)
+        return root;
 
-    for (int i = 0; i < n; ++i) {
-        minPrice = min(minPrice, a[i]);
+    TreeNode* temp = root->left;
+    root->left = root->right;
+    root->right = temp;
 
-        localProfit = a[i] - minPrice;
-        globalProfit = max(globalProfit, localProfit);
-    }
+    solve(root->left);
+    solve(root->right);
 
-    return globalProfit;
+    return root;
 }
 
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int n;
-    cin >> n;
-    vi a(n);
-    trav(i, a)
-        cin >> i;
-
-    cout << solve(a) << nl;
+    cout << "Hello, world!" << nl;
 
 #ifdef _GLIBCXX_DEBUG
     cerr << endl << "finished in " << clock() * 1.0 / CLOCKS_PER_SEC << " sec" << endl;
