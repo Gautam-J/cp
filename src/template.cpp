@@ -1,4 +1,4 @@
-//
+
 /*
 
 */
@@ -55,7 +55,6 @@ int solve() {
     // Time: O()
     // Space: O()
 
-    cout << "Hello, world!" << nl;
     return -1;
 }
 
@@ -63,7 +62,7 @@ int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    cout << solve() << nl;
+    cout << "Hello, world!" << nl;
 
 #ifdef _GLIBCXX_DEBUG
     cerr << endl << "finished in " << clock() * 1.0 / CLOCKS_PER_SEC << " sec" << endl;
