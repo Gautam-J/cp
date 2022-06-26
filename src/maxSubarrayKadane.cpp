@@ -1,4 +1,4 @@
-/* CLRS, LC - Easy */
+/* CLRS, LC - Easy, grind 10 */
 /*
 Given an integer array nums, find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.
 
@@ -36,6 +36,24 @@ Constraints:
 using namespace std;
 
 vector<int> findMaxSubarray(vector<int>& arr) {
+    // Algorithm 1
+    // Initialize globalMax to -inf, localMax
+    // Iterate through the array
+    // localMax = max(localMax + a[i], a[i])
+    // globalMax = max(globalMax, localMax)
+    // Finally return globalMax
+    //
+    // Another variant of the same algorithm
+    // Initialize globalMax to -inf, localMax
+    // Iterate through the array
+    // localMax += a[i]
+    // globalMax = max(globalMax, localMax)
+    // localMax = max(localMax, 0)
+    // Finally return globalMax
+    //
+    // Time: O(n)
+    // Space: O(1)
+
     vector<int> result;
     int bestLeft, bestRight, temp;
 

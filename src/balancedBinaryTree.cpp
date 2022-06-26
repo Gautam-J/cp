@@ -1,4 +1,4 @@
-/* LC - Easy */
+/* LC - Easy, grind 12 */
 /*
 Given a binary tree, determine if it is height-balanced.
 
@@ -36,45 +36,60 @@ The number of nodes in the tree is in the range [0, 5000].
 #include <bits/stdc++.h>
 using namespace std;
 
-#define FOR(i, n) for (int i = 0; i < n; i++)
-#define all(a) a.begin(), a.end()
-#define sz(x) (int)(x).size()
+void dbg_out() { cerr << endl; }
+template<typename A, typename B> ostream& operator<<(ostream &os, const pair<A, B> &p) { return os << '(' << p.first << ", " << p.second << ')'; }
+template<typename T_container, typename T = typename enable_if<!is_same<T_container, string>::value, typename T_container::value_type>::type> ostream& operator<<(ostream &os, const T_container &v) { os << '{'; string sep; for (const T &x : v) os << sep << x, sep = ", "; return os << '}'; }
+template<typename Head, typename... Tail> void dbg_out(Head H, Tail... T) { cerr << ' ' << H; dbg_out(T...); }
+
+template<typename T> T gcd(T a, T b) { return ( b ? __gcd(a, b) : a); }
+template<typename T> T lcm(T a, T b) { return (a * (b / gcd(a, b))); }
+
+#define forn(i, n) for (int i = 0; i < n; ++i)
+#define fore(i, l, r) for (int i = (int)l; i <= (int)r; ++i)
 #define trav(i, a) for (auto& i : a)
+#define allit(a) a.begin(), a.end()
+#define sz(x) (int)(x).size()
+#define pb push_back
+#define SHUF(v) shuffle(all(v), mt_rand)
+#define umap unordered_map
+#define uset unordered_set
+#define imax INT_MAX
+#define imin INT_MIN
 
 #ifdef _GLIBCXX_DEBUG
-#define debug(x) cerr << "\e[91m"<<"[DEBUG] "<<__func__<<":"<<__LINE__<<" [" << #x << "] = [" << x << "]" << "\e[39m" << '\n';
+#define debug(...) cerr << "[DEBUG]: [" << #__VA_ARGS__ << "]:", dbg_out(__VA_ARGS__)
 #else
-#define debug(x)
+#define debug(...)
 #endif
 
 typedef long long ll;
+typedef long double ld;
 typedef pair<int, int> pi;
 typedef vector<int> vi;
-typedef vector<pi> vpi;
+typedef vector< vi > vvi;
+typedef vector< pi > vpi;
 
+// mt19937_64 for 64 bit random numbers
 mt19937 mt_rand(chrono::high_resolution_clock::now().time_since_epoch().count());
+
 const char nl = '\n';
-const double PI = acos(-1);
+/* const ld PI = acos(-1.0); */
 
 struct TreeNode {
     int val;
-    TreeNode *left;
-    TreeNode *right;
-    TreeNode() : val(0), left(nullptr), right(nullptr) {}
-    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
-    TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+    TreeNode* left;
+    TreeNode* right;
 };
 
-int helper(TreeNode* root) {
-    // DFS
+int dfs(TreeNode* root) {
     if (root == NULL)
         return 0;
 
-    int leftHeight = helper(root->left);
+    int leftHeight = dfs(root->left);
     if (leftHeight == -1)
         return -1;
 
-    int rightHeight = helper(root->right);
+    int rightHeight = dfs(root->right);
     if (rightHeight == -1)
         return -1;
 
@@ -84,15 +99,33 @@ int helper(TreeNode* root) {
     return max(leftHeight, rightHeight) + 1;
 }
 
-bool isBalanced(TreeNode* root) {
-    return helper(root) != -1;
+bool solve(TreeNode* root) {
+    // Algorithm:
+    // DFS
+    // if root is null, return 0
+    // recursively call dfs on root.left
+    // if leftHeight is -1, return -1
+    // recursively call dfs on root.right
+    // if rightHeight is -1, return -1
+    // if (abs(leftHeight - rightHeight) > 1), return -1
+    // finally return max(leftHeight, rightHeight) + 1
+    //
+    // In the first call to dfs, check if return value is -1 or not
+    //
+    // This algorithm is built on top of the algo to find
+    // max height of tree
+    //
+    // Time: O(n)
+    // Space: O(n)
+
+    return dfs(root) != -1;
 }
 
 int main() {
-    ios_base::sync_with_stdio(0);
-    cin.tie(0);
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
 
-    cout << "Hello world!" << nl;
+    cout << "Hello, world!" << nl;
 
 #ifdef _GLIBCXX_DEBUG
     cerr << endl << "finished in " << clock() * 1.0 / CLOCKS_PER_SEC << " sec" << endl;

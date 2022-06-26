@@ -1,45 +1,40 @@
-/* LC - Easy, grind 13 */
+/* LC - Easy, grind - 11 */
 /*
-Given head, the head of a linked list, determine if the linked list has a cycle in it.
+Given a binary search tree (BST), find the lowest common ancestor (LCA) of two given nodes in the BST.
 
-There is a cycle in a linked list if there is some node in the list that can be reached again by continuously following the next pointer. Internally, pos is used to denote the index of the node that tail's next pointer is connected to. Note that pos is not passed as a parameter.
-
-Return true if there is a cycle in the linked list. Otherwise, return false.
+According to the definition of LCA on Wikipedia: ÒThe lowest common ancestor is defined between two nodes p and q as the lowest node in T that has both p and q as descendants (where we allow a node to be a descendant of itself).Ó
 
 
 
 Example 1:
 
 
-Input: head = [3,2,0,-4], pos = 1
-Output: true
-Explanation: There is a cycle in the linked list, where the tail connects to the 1st node (0-indexed).
+Input: root = [6,2,8,0,4,7,9,null,null,3,5], p = 2, q = 8
+Output: 6
+Explanation: The LCA of nodes 2 and 8 is 6.
 Example 2:
 
 
-Input: head = [1,2], pos = 0
-Output: true
-Explanation: There is a cycle in the linked list, where the tail connects to the 0th node.
+Input: root = [6,2,8,0,4,7,9,null,null,3,5], p = 2, q = 4
+Output: 2
+Explanation: The LCA of nodes 2 and 4 is 2, since a node can be a descendant of itself according to the LCA definition.
 Example 3:
 
-
-Input: head = [1], pos = -1
-Output: false
-Explanation: There is no cycle in the linked list.
+Input: root = [2,1], p = 2, q = 1
+Output: 2
 
 
 Constraints:
 
-The number of the nodes in the list is in the range [0, 104].
--105 <= Node.val <= 105
-pos is -1 or a valid index in the linked-list.
-
-
-Follow up: Can you solve it using O(1) (i.e. constant) memory?
+The number of nodes in the tree is in the range [2, 105].
+-109 <= Node.val <= 109
+All Node.val are unique.
+p != q
+p and q will exist in the BST.
 */
 
-/* Time Complexity: O(n) */
-/* Space Complexity: O(1) */
+/* Time Complexity: O(log n) */
+/* Space Complexity: O(log n) */
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -83,35 +78,33 @@ mt19937 mt_rand(chrono::high_resolution_clock::now().time_since_epoch().count())
 const char nl = '\n';
 /* const ld PI = acos(-1.0); */
 
-struct ListNode {
+struct TreeNode {
     int val;
-    ListNode* next;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 
-bool solve(ListNode* head) {
+void solve(TreeNode* root, TreeNode* p, TreeNode* q) {
     // Algorithm:
-    // Floyd's cycle-finding algorithm, tortoise and hare algorithm
-    // Have two pointers fast and slow
-    // fast = head, slow = head
-    // while fast and fast.next
-    // slow = slow->next
-    // fast = fast->next->next
-    // if (slow == fast) return true
+    // if root is null, return root;
+    // if root.val > p.val and root.val > q.val,
+    // recursively call func with root.left
+    // if root.val < p.val and root.val < q.val,
+    // recursively call func with root.right
+    // else return root
     //
-    // finally return false
-    //
-    // Time: O(n)
-    // Space: O(1)
+    // Time: O(log n)
+    // Space: O(log n)
 
-    ListNode* slow = head, *fast = head;
-    while (fast && fast->next) {
-        slow = slow->next;
-        fast = fast->next->next;
+    if (!root)
+        return root;
+    if (root->val > p->val && root->val > q->val)
+        return solve(root->left, p, q);
+    if (root->val < p->val && root->val < q->val)
+        return solve(root->right, p, q);
 
-        if (slow == fast)
-            return true;
-    }
-    return false;
+    return root;
 }
 
 int main() {
