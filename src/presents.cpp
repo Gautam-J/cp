@@ -1,64 +1,82 @@
 /* CF - 800 */
-/*
-A. Presents
-time limit per test2 seconds
-memory limit per test256 megabytes
-inputstandard input
-outputstandard output
-Little Petya very much likes gifts. Recently he has received a new laptop as a New Year gift from his mother. He immediately decided to give it to somebody else as what can be more pleasant than giving somebody gifts. And on this occasion he organized a New Year party at his place and invited n his friends there.
-
-If there's one thing Petya likes more that receiving gifts, that's watching others giving gifts to somebody else. Thus, he safely hid the laptop until the next New Year and made up his mind to watch his friends exchanging gifts while he does not participate in the process. He numbered all his friends with integers from 1 to n. Petya remembered that a friend number i gave a gift to a friend number pi. He also remembered that each of his friends received exactly one gift.
-
-Now Petya wants to know for each friend i the number of a friend who has given him a gift.
-
-Input
-The first line contains one integer n (1 ≤ n ≤ 100) — the quantity of friends Petya invited to the party. The second line contains n space-separated integers: the i-th number is pi — the number of a friend who gave a gift to friend number i. It is guaranteed that each friend received exactly one gift. It is possible that some friends do not share Petya's ideas of giving gifts to somebody else. Those friends gave the gifts to themselves.
-
-Output
-Print n space-separated integers: the i-th number should equal the number of the friend who gave a gift to friend number i.
-
-Examples
-inputCopy
-4
-2 3 4 1
-outputCopy
-4 1 2 3
-inputCopy
-3
-1 3 2
-outputCopy
-1 3 2
-inputCopy
-2
-1 2
-outputCopy
-1 2
-*/
-
-/* Time Complexity: O(n) */
-/* Space Complexity: O(1) */
+/* Time Complexity: O() */
+/* Space Complexity: O() */
 
 #include <bits/stdc++.h>
 using namespace std;
 
+void dbg_out() { cerr << endl; }
+template<typename A, typename B> ostream& operator<<(ostream &os, const pair<A, B> &p) { return os << '(' << p.first << ", " << p.second << ')'; }
+template<typename T_container, typename T = typename enable_if<!is_same<T_container, string>::value, typename T_container::value_type>::type> ostream& operator<<(ostream &os, const T_container &v) { os << '{'; string sep; for (const T &x : v) os << sep << x, sep = ", "; return os << '}'; }
+template<typename Head, typename... Tail> void dbg_out(Head H, Tail... T) { cerr << ' ' << H; dbg_out(T...); }
+
+template<typename T> T gcd(T a, T b) { return ( b ? __gcd(a, b) : a); }
+template<typename T> T lcm(T a, T b) { return (a * (b / gcd(a, b))); }
+
+#define forn(i, l, r) for (int i = (int)l; i < (int)r; ++i)
+#define fore(i, l, r) for (int i = (int)l; i <= (int)r; ++i)
+#define trav(i, a) for (auto& i : a)
+#define allit(a) a.begin(), a.end()
+#define sz(x) (int)(x).size()
+#define pb push_back
+#define SHUF(v) shuffle(all(v), mt_rand)
+#define umap unordered_map
+#define uset unordered_set
+#define imax INT_MAX
+#define imin INT_MIN
+
+#ifdef _GLIBCXX_DEBUG
+#define debug(...) cerr << "[DEBUG]: [" << #__VA_ARGS__ << "]:", dbg_out(__VA_ARGS__)
+#else
+#define debug(...)
+#endif
+
+typedef long long ll;
+typedef long double ld;
+typedef pair<int, int> pi;
+typedef vector<int> vi;
+typedef vector< vi > vvi;
+typedef vector< pi > vpi;
+
+// mt19937_64 for 64 bit random numbers
+mt19937 mt_rand(chrono::high_resolution_clock::now().time_since_epoch().count());
+
+const char nl = '\n';
+/* const ld PI = acos(-1.0); */
+
+void solve(vi& a) {
+    // Algorithm:
+    // For i = 1 to n
+    //     store i in index a[i];
+    //
+    // Time: O(n)
+    // Space: O(n)
+
+    int n = sz(a);
+    vi res(n);
+
+    forn(i, 0, n)
+        res[a[i] - 1] = i + 1;
+
+    trav(i, res)
+        cout << i << " ";
+    cout << nl;
+}
+
 int main() {
-    ios_base::sync_with_stdio(0);
-    cin.tie(0);
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
 
-    int n, temp;
+    int n;
     cin >> n;
+    vi a(n);
+    trav(i, a)
+        cin >> i;
+    solve(a);
 
-    vector<int> arr(n + 1);
-
-    for (int i = 1; i <= n; i++) {
-        cin >> temp;
-        arr[temp] = i;
-    }
-
-    for (int i = 1; i <= n; i++)
-        cout << arr[i] << ' ';
-
-    cout << '\n';
+#ifdef _GLIBCXX_DEBUG
+    cerr << endl << "finished in " << clock() * 1.0 / CLOCKS_PER_SEC << " sec" << endl;
+#endif
 
     return 0;
 }

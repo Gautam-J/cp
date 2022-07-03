@@ -1,111 +1,156 @@
 /* CF - 800 */
-/*
-A. Arrival of the General
-time limit per test2 seconds
-memory limit per test256 megabytes
-inputstandard input
-outputstandard output
-A Ministry for Defense sent a general to inspect the Super Secret Military Squad under the command of the Colonel SuperDuper. Having learned the news, the colonel ordered to all n squad soldiers to line up on the parade ground.
-
-By the military charter the soldiers should stand in the order of non-increasing of their height. But as there's virtually no time to do that, the soldiers lined up in the arbitrary order. However, the general is rather short-sighted and he thinks that the soldiers lined up correctly if the first soldier in the line has the maximum height and the last soldier has the minimum height. Please note that the way other solders are positioned does not matter, including the case when there are several soldiers whose height is maximum or minimum. Only the heights of the first and the last soldier are important.
-
-For example, the general considers the sequence of heights (4, 3, 4, 2, 1, 1) correct and the sequence (4, 3, 1, 2, 2) wrong.
-
-Within one second the colonel can swap any two neighboring soldiers. Help him count the minimum time needed to form a line-up which the general will consider correct.
-
-Input
-The first input line contains the only integer n (2 ≤ n ≤ 100) which represents the number of soldiers in the line. The second line contains integers a1, a2, ..., an (1 ≤ ai ≤ 100) the values of the soldiers' heights in the order of soldiers' heights' increasing in the order from the beginning of the line to its end. The numbers are space-separated. Numbers a1, a2, ..., an are not necessarily different.
-
-Output
-Print the only integer — the minimum number of seconds the colonel will need to form a line-up the general will like.
-
-Examples
-inputCopy
-4
-33 44 11 22
-outputCopy
-2
-inputCopy
-7
-10 10 58 31 63 40 76
-outputCopy
-10
-Note
-In the first sample the colonel will need to swap the first and second soldier and then the third and fourth soldier. That will take 2 seconds. The resulting position of the soldiers is (44, 33, 22, 11).
-
-In the second sample the colonel may swap the soldiers in the following sequence:
-
-(10, 10, 58, 31, 63, 40, 76)
-(10, 58, 10, 31, 63, 40, 76)
-(10, 58, 10, 31, 63, 76, 40)
-(10, 58, 10, 31, 76, 63, 40)
-(10, 58, 31, 10, 76, 63, 40)
-(10, 58, 31, 76, 10, 63, 40)
-(10, 58, 31, 76, 63, 10, 40)
-(10, 58, 76, 31, 63, 10, 40)
-(10, 76, 58, 31, 63, 10, 40)
-(76, 10, 58, 31, 63, 10, 40)
-(76, 10, 58, 31, 63, 40, 10)
-*/
-
 /* Time Complexity: O(n) */
 /* Space Complexity: O(1) */
 
 #include <bits/stdc++.h>
 using namespace std;
 
-#define FOR(i, n) for (int i = 0; i < n; i++)
-#define all(a) a.begin(), a.end()
+void dbg_out() { cerr << endl; }
+template<typename A, typename B> ostream& operator<<(ostream &os, const pair<A, B> &p) { return os << '(' << p.first << ", " << p.second << ')'; }
+template<typename T_container, typename T = typename enable_if<!is_same<T_container, string>::value, typename T_container::value_type>::type> ostream& operator<<(ostream &os, const T_container &v) { os << '{'; string sep; for (const T &x : v) os << sep << x, sep = ", "; return os << '}'; }
+template<typename Head, typename... Tail> void dbg_out(Head H, Tail... T) { cerr << ' ' << H; dbg_out(T...); }
+
+template<typename T> T gcd(T a, T b) { return ( b ? __gcd(a, b) : a); }
+template<typename T> T lcm(T a, T b) { return (a * (b / gcd(a, b))); }
+
+#define forn(i, l, r) for (int i = (int)l; i < (int)r; ++i)
+#define fore(i, l, r) for (int i = (int)l; i <= (int)r; ++i)
 #define trav(i, a) for (auto& i : a)
+#define allit(a) a.begin(), a.end()
+#define sz(x) (int)(x).size()
+#define pb push_back
+#define SHUF(v) shuffle(all(v), mt_rand)
+#define umap unordered_map
+#define uset unordered_set
+#define imax INT_MAX
+#define imin INT_MIN
+
+#ifdef _GLIBCXX_DEBUG
+#define debug(...) cerr << "[DEBUG]: [" << #__VA_ARGS__ << "]:", dbg_out(__VA_ARGS__)
+#else
+#define debug(...)
+#endif
 
 typedef long long ll;
+typedef long double ld;
+typedef pair<int, int> pi;
 typedef vector<int> vi;
+typedef vector< vi > vvi;
+typedef vector< pi > vpi;
+
+// mt19937_64 for 64 bit random numbers
+mt19937 mt_rand(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 const char nl = '\n';
+/* const ld PI = acos(-1.0); */
 
-int minSwaps(vi& a) {
-    int n = a.size();
+int solve(vi& a) {
+    // Algorithm:
+    // Find the maxElement and its index
+    // Find the minElement and its index
+    //
+    // If minElement index < maxElement index, then while swapping
+    // minElement will move forward by 1 index. Thus, increment minElement
+    // index by 1.
+    //
+    // number of swaps needed for maxElement to be in first position is
+    // the index value itself.
+    // number of swaps needed for minElement to be in the last position is
+    // n - 1 - minElement index
+    //
+    // Return the sum of the above two
+    //
+    // Although the other algorithm gets accepted, and share the same
+    // complexities, this is a bit more faster and optimized due to removal
+    // of many for loops.
+    //
+    // Time: O(n)
+    // Space: O(1)
 
-    // store max value and its index
-    pair<int, int> minp = {INT_MAX, -1};
-    pair<int, int> maxp = {INT_MIN, -1};
+    int minE = imax, maxE = imin;
+    int minEI, maxEI, n = sz(a);
 
-    FOR(i, n) {
-        if (a[i] > maxp.first) {
-            maxp.first = a[i];
-            maxp.second = i;
+    forn(i, 0, n) {
+        // strictly greater than to get the left most max element
+        if (a[i] > maxE) {
+            maxE = a[i];
+            maxEI = i;
         }
-        if (a[i] <= minp.first) {
-            minp.first = a[i];
-            minp.second = i;
+
+        // greater than or equal to get the right most min element
+        if (a[i] <= minE) {
+            minE = a[i];
+            minEI = i;
         }
     }
 
-    /* cout << maxp.first << " " << minp.first << nl; */
-    /* cout << maxp.second << " " << minp.second << nl; */
+    if (minEI < maxEI)
+        minEI++;
 
-    if (maxp.second >= minp.second)
-        minp.second++;
+    int swapsForMaxE = maxEI;
+    int swapsForMinE = (n - 1 - minEI);
 
-    /* cout << maxp.second << " " << minp.second << nl; */
+    return swapsForMaxE + swapsForMinE;
+}
 
-    int stepsMax = maxp.second;
-    int stepsMin = (n - 1 - minp.second);
+int solve2(vi& a) {
+    // Algorithm:
+    // Find the max element from left to right,
+    // keep swapping until it is the first.
+    // Find the min element from right to left,
+    // keep swapping until it is the last.
+    //
+    // Return the total number of swaps.
+    //
+    // Time: O(n)
+    // Space: O(1)
 
-    return stepsMax + stepsMin;
+    int n = sz(a);
+    int maxE = imin, minE = imax;
+    int maxEIndex, minEIndex;
+
+    forn(i, 0, n) {
+        if (a[i] > maxE) {
+            maxE = a[i];
+            maxEIndex = i;
+        }
+    }
+
+    int res = 0;
+    for (int i = maxEIndex; i > 0; i--) {
+        swap(a[i], a[i - 1]);
+        res++;
+    }
+
+    for (int i = n - 1; i >= 0; i--) {
+        if (a[i] < minE) {
+            minE = a[i];
+            minEIndex = i;
+        }
+    }
+
+    for (int i = minEIndex; i < n - 1; i++) {
+        swap(a[i], a[i + 1]);
+        res++;
+    }
+
+    return res;
 }
 
 int main() {
-    ios_base::sync_with_stdio(0);
-    cin.tie(0);
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
 
     int n;
     cin >> n;
-    vi squad(n);
-    trav(i, squad)
+    vi a(n);
+    trav(i, a)
         cin >> i;
+    cout << solve(a) << nl;
 
-    cout << minSwaps(squad) << nl;
+#ifdef _GLIBCXX_DEBUG
+    cerr << endl << "finished in " << clock() * 1.0 / CLOCKS_PER_SEC << " sec" << endl;
+#endif
 
     return 0;
 }

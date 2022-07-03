@@ -1,73 +1,78 @@
 /* CF - 800 */
-/*
-A. In Search of an Easy Problem
-time limit per test1 second
-memory limit per test256 megabytes
-inputstandard input
-outputstandard output
-When preparing a tournament, Codeforces coordinators try treir best to make the first problem as easy as possible. This time the coordinator had chosen some problem and asked n people about their opinions. Each person answered whether this problem is easy or hard.
-
-If at least one of these n people has answered that the problem is hard, the coordinator decides to change the problem. For the given responses, check if the problem is easy enough.
-
-Input
-The first line contains a single integer n (1≤n≤100) — the number of people who were asked to give their opinions.
-
-The second line contains n integers, each integer is either 0 or 1. If i-th integer is 0, then i-th person thinks that the problem is easy; if it is 1, then i-th person thinks that the problem is hard.
-
-Output
-Print one word: "EASY" if the problem is easy according to all responses, or "HARD" if there is at least one person who thinks the problem is hard.
-
-You may print every letter in any register: "EASY", "easy", "EaSY" and "eAsY" all will be processed correctly.
-
-Examples
-inputCopy
-3
-0 0 1
-outputCopy
-HARD
-inputCopy
-1
-0
-outputCopy
-EASY
-Note
-In the first example the third person says it's a hard problem, so it should be replaced.
-
-In the second example the problem easy for the only person, so it doesn't have to be replaced.
-*/
-
 /* Time Complexity: O(n) */
 /* Space Complexity: O(1) */
 
 #include <bits/stdc++.h>
 using namespace std;
 
-void difficulty(vector<int>& arr) {
-    bool isHard = false;
-    for (auto i : arr)
-        if (i == 1) {
-            isHard = true;
-            break;
-        }
+void dbg_out() { cerr << endl; }
+template<typename A, typename B> ostream& operator<<(ostream &os, const pair<A, B> &p) { return os << '(' << p.first << ", " << p.second << ')'; }
+template<typename T_container, typename T = typename enable_if<!is_same<T_container, string>::value, typename T_container::value_type>::type> ostream& operator<<(ostream &os, const T_container &v) { os << '{'; string sep; for (const T &x : v) os << sep << x, sep = ", "; return os << '}'; }
+template<typename Head, typename... Tail> void dbg_out(Head H, Tail... T) { cerr << ' ' << H; dbg_out(T...); }
 
-    if (isHard)
-        cout << "HARD" << '\n';
-    else
-        cout << "EASY" << '\n';
+template<typename T> T gcd(T a, T b) { return ( b ? __gcd(a, b) : a); }
+template<typename T> T lcm(T a, T b) { return (a * (b / gcd(a, b))); }
+
+#define forn(i, l, r) for (int i = (int)l; i < (int)r; ++i)
+#define fore(i, l, r) for (int i = (int)l; i <= (int)r; ++i)
+#define trav(i, a) for (auto& i : a)
+#define allit(a) a.begin(), a.end()
+#define sz(x) (int)(x).size()
+#define pb push_back
+#define SHUF(v) shuffle(all(v), mt_rand)
+#define umap unordered_map
+#define uset unordered_set
+#define imax INT_MAX
+#define imin INT_MIN
+
+#ifdef _GLIBCXX_DEBUG
+#define debug(...) cerr << "[DEBUG]: [" << #__VA_ARGS__ << "]:", dbg_out(__VA_ARGS__)
+#else
+#define debug(...)
+#endif
+
+typedef long long ll;
+typedef long double ld;
+typedef pair<int, int> pi;
+typedef vector<int> vi;
+typedef vector< vi > vvi;
+typedef vector< pi > vpi;
+
+// mt19937_64 for 64 bit random numbers
+mt19937 mt_rand(chrono::high_resolution_clock::now().time_since_epoch().count());
+
+const char nl = '\n';
+/* const ld PI = acos(-1.0); */
+
+bool solve(vi& a) {
+    // Algorithm:
+    // Traverse through the array, check if 1 exists
+    //
+    // Time: O(n)
+    // Space: O(1)
+
+    trav(i, a) {
+        if (i == 1)
+            return true;
+    }
+
+    return false;
 }
 
 int main() {
-    ios_base::sync_with_stdio(0);
-    cin.tie(0);
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
 
     int n;
     cin >> n;
+    vi a(n);
+    trav(i, a)
+        cin >> i;
+    cout << (solve(a) ? "HARD" : "EASY") << nl;
 
-    vector<int> arr(n);
-    for (int i = 0; i < n; i++)
-        cin >> arr[i];
-
-    difficulty(arr);
+#ifdef _GLIBCXX_DEBUG
+    cerr << endl << "finished in " << clock() * 1.0 / CLOCKS_PER_SEC << " sec" << endl;
+#endif
 
     return 0;
 }

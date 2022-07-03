@@ -1,110 +1,7 @@
 /* CF - 800 */
-/*
-A. Sum of Round Numbers
-time limit per test1 second
-memory limit per test256 megabytes
-inputstandard input
-outputstandard output
-A positive (strictly greater than zero) integer is called round if it is of the form d00...0. In other words, a positive integer is round if all its digits except the leftmost (most significant) are equal to zero. In particular, all numbers from 1
-1
- to 9
-9
- (inclusive) are round.
-
-For example, the following numbers are round: 4000
-4000
-, 1
-1
-, 9
-9
-, 800
-800
-, 90
-90
-. The following numbers are not round: 110
-110
-, 707
-707
-, 222
-222
-, 1001
-1001
-.
-
-You are given a positive integer ??
-n
- (1²??²104
-1
-²
-n
-²
-10
-4
-). Represent the number ??
-n
- as a sum of round numbers using the minimum number of summands (addends). In other words, you need to represent the given number ??
-n
- as a sum of the least number of terms, each of which is a round number.
-
-Input
-The first line contains an integer ??
-t
- (1²??²104
-1
-²
-t
-²
-10
-4
-) Ñ the number of test cases in the input. Then ??
-t
- test cases follow.
-
-Each test case is a line containing an integer ??
-n
- (1²??²104
-1
-²
-n
-²
-10
-4
-).
-
-Output
-Print ??
-t
- answers to the test cases. Each answer must begin with an integer ??
-k
- Ñ the minimum number of summands. Next, ??
-k
- terms must follow, each of which is a round number, and their sum is ??
-n
-. The terms can be printed in any order. If there are several answers, print any of them.
-
-Example
-inputCopy
-5
-5009
-7
-9876
-10000
-10
-outputCopy
-2
-5000 9
-1
-7
-4
-800 70 6 9000
-1
-10000
-1
-10
-*/
 
 /* Time Complexity: O(log_10 n) */
-/* Space Complexity: O(1) */
+/* Space Complexity: O(log_10 n) */
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -117,10 +14,11 @@ template<typename Head, typename... Tail> void dbg_out(Head H, Tail... T) { cerr
 template<typename T> T gcd(T a, T b) { return ( b ? __gcd(a, b) : a); }
 template<typename T> T lcm(T a, T b) { return (a * (b / gcd(a, b))); }
 
-#define FOR(i, n) for (int i = 0; i < n; i++)
-#define all(a) a.begin(), a.end()
-#define sz(x) (int)(x).size()
+#define forn(i, l, r) for (int i = (int)l; i < (int)r; ++i)
+#define fore(i, l, r) for (int i = (int)l; i <= (int)r; ++i)
 #define trav(i, a) for (auto& i : a)
+#define allit(a) a.begin(), a.end()
+#define sz(x) (int)(x).size()
 #define pb push_back
 #define SHUF(v) shuffle(all(v), mt_rand)
 #define umap unordered_map
@@ -135,6 +33,7 @@ template<typename T> T lcm(T a, T b) { return (a * (b / gcd(a, b))); }
 #endif
 
 typedef long long ll;
+typedef long double ld;
 typedef pair<int, int> pi;
 typedef vector<int> vi;
 typedef vector< vi > vvi;
@@ -144,24 +43,34 @@ typedef vector< pi > vpi;
 mt19937 mt_rand(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 const char nl = '\n';
-const double PI = acos(-1);
+/* const ld PI = acos(-1.0); */
 
 void solve(int n) {
-    int digit, i = 0;
-    vi ans;
+    // Algorithm:
+    // Calculate the length of the number, floor(log_10 n) + 1
+    //
+    // for i=0 to length - 1
+    //     if ith digit is not zero
+    //         take ith digit and mulitply by 10 power i
+    //
+    // Time: O(log_10 n)
+    // Space: O(log_10 n)
 
-    while (n) {
+    int l = floor(log10(n)) + 1, digit;
+    vi res;
+    forn(i, 0, l) {
         digit = n % 10;
-        if (digit != 0) {
-            ans.push_back((pow(10, i)) * digit);
-        }
         n /= 10;
-        i++;
-    }
-    cout << sz(ans) << nl;
 
-    trav(j, ans)
-        cout << j << " ";
+        if (digit == 0)
+            continue;
+
+        res.pb(pow(10, i) * digit);
+    }
+
+    cout << sz(res) << nl;
+    trav(i, res)
+        cout << i << " ";
     cout << nl;
 }
 
@@ -171,7 +80,6 @@ int main() {
 
     int t, n;
     cin >> t;
-
     while (t--) {
         cin >> n;
         solve(n);

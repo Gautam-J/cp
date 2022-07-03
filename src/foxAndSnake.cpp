@@ -1,61 +1,4 @@
 /* CF - 800 */
-/*
-A. Fox And Snake
-time limit per test2 seconds
-memory limit per test256 megabytes
-inputstandard input
-outputstandard output
-Fox Ciel starts to learn programming. The first task is drawing a fox! However, that turns out to be too hard for a beginner, so she decides to draw a snake instead.
-
-A snake is a pattern on a n by m table. Denote c-th cell of r-th row as (r,?c). The tail of the snake is located at (1,?1), then it's body extends to (1,?m), then goes down 2 rows to (3,?m), then goes left to (3,?1) and so on.
-
-Your task is to draw this snake for Fox Ciel: the empty cells should be represented as dot characters ('.') and the snake cells should be filled with number signs ('#').
-
-Consider sample tests in order to understand the snake pattern.
-
-Input
-The only line contains two integers: n and m (3?²?n,?m?²?50).
-
-n is an odd number.
-
-Output
-Output n lines. Each line should contain a string consisting of m characters. Do not output spaces.
-
-Examples
-inputCopy
-3 3
-outputCopy
-###
-..#
-###
-inputCopy
-3 4
-outputCopy
-####
-...#
-####
-inputCopy
-5 3
-outputCopy
-###
-..#
-###
-#..
-###
-inputCopy
-9 9
-outputCopy
-#########
-........#
-#########
-#........
-#########
-........#
-#########
-#........
-#########
-*/
-
 /* Time Complexity: O(nm) */
 /* Space Complexity: O(1) */
 
@@ -70,10 +13,11 @@ template<typename Head, typename... Tail> void dbg_out(Head H, Tail... T) { cerr
 template<typename T> T gcd(T a, T b) { return ( b ? __gcd(a, b) : a); }
 template<typename T> T lcm(T a, T b) { return (a * (b / gcd(a, b))); }
 
-#define FOR(i, n) for (int i = 0; i < n; i++)
-#define all(a) a.begin(), a.end()
-#define sz(x) (int)(x).size()
+#define forn(i, l, r) for (int i = (int)l; i < (int)r; ++i)
+#define fore(i, l, r) for (int i = (int)l; i <= (int)r; ++i)
 #define trav(i, a) for (auto& i : a)
+#define allit(a) a.begin(), a.end()
+#define sz(x) (int)(x).size()
 #define pb push_back
 #define SHUF(v) shuffle(all(v), mt_rand)
 #define umap unordered_map
@@ -88,6 +32,7 @@ template<typename T> T lcm(T a, T b) { return (a * (b / gcd(a, b))); }
 #endif
 
 typedef long long ll;
+typedef long double ld;
 typedef pair<int, int> pi;
 typedef vector<int> vi;
 typedef vector< vi > vvi;
@@ -97,40 +42,49 @@ typedef vector< pi > vpi;
 mt19937 mt_rand(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 const char nl = '\n';
-const double PI = acos(-1);
+/* const ld PI = acos(-1.0); */
 
 void solve(int n, int m) {
-    FOR(i, m)
-        cout << "#";
-    cout << nl;
+    // Algorithm:
+    // Given a n x m matrix, draw the pattern starting from top left
+    // go all the way to right, and then down 2 rows,
+    // then all the way to left.
+    //
+    // Since n is always odd, odd rows will be completly filled, from 1 to n
+    // Even rows will have a # alternating, starting from right side
+    //
+    // For example, for n = 5, m = 3,
+    // ###
+    // ..#
+    // ###
+    // #..
+    // ###
+    //
+    // Time: O(nm)
+    // Space: O(1)
 
-    bool isLeft = true;
-    for (int i = 1; i <= n - 2; i++) {
+    int isRight = 1;
+    fore(i, 1, n) {
+        // odd row
         if (i % 2 != 0) {
-            if (isLeft) {
-                // ..#
-                FOR(j, m - 1)
-                    cout << ".";
-                cout << "#" << nl;
-            } else {
-                // #..
-                cout << "#";
-                FOR(j, m - 1)
-                    cout << ".";
-                cout << nl;
-            }
-            isLeft = !isLeft;
-        } else {
-            // ###
-            FOR(j, m)
+            forn(j, 0, m)
                 cout << "#";
             cout << nl;
+        } else {
+            // even row
+            if (isRight) {
+                fore(j, 1, m - 1)
+                    cout << '.';
+                cout << '#' << nl;
+            } else {
+                cout << '#';
+                fore(j, 2, m)
+                    cout << '.';
+                cout << nl;
+            }
+            isRight ^= 1;
         }
     }
-
-    FOR(i, m)
-        cout << "#";
-    cout << nl;
 }
 
 int main() {

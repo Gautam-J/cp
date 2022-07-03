@@ -1,85 +1,91 @@
 /* CF - 800 */
-/*
-A. Nearly Lucky Number
-time limit per test2 seconds
-memory limit per test256 megabytes
-inputstandard input
-outputstandard output
-Petya loves lucky numbers. We all know that lucky numbers are the positive integers whose decimal representations contain only the lucky digits 4 and 7. For example, numbers 47, 744, 4 are lucky and 5, 17, 467 are not.
-
-Unfortunately, not all numbers are lucky. Petya calls a number nearly lucky if the number of lucky digits in it is a lucky number. He wonders whether number n is a nearly lucky number.
-
-Input
-The only line contains an integer n (1 ≤ n ≤ 1018).
-
-Please do not use the %lld specificator to read or write 64-bit numbers in С++. It is preferred to use the cin, cout streams or the %I64d specificator.
-
-Output
-Print on the single line "YES" if n is a nearly lucky number. Otherwise, print "NO" (without the quotes).
-
-Examples
-inputCopy
-40047
-outputCopy
-NO
-inputCopy
-7747774
-outputCopy
-YES
-inputCopy
-1000000000000000000
-outputCopy
-NO
-Note
-In the first sample there are 3 lucky digits (first one and last two), so the answer is "NO".
-
-In the second sample there are 7 lucky digits, 7 is lucky number, so the answer is "YES".
-
-In the third sample there are no lucky digits, so the answer is "NO".
-*/
-
-/* Time Complexity: O(log n) base 10 */
+/* Time Complexity: O(log_10 n) */
 /* Space Complexity: O(1) */
 
 #include <bits/stdc++.h>
 using namespace std;
 
-void isNearlyLucky(string& n) {
-    int luckyDigit = 0;
-    bool isLucky = true;
+void dbg_out() { cerr << endl; }
+template<typename A, typename B> ostream& operator<<(ostream &os, const pair<A, B> &p) { return os << '(' << p.first << ", " << p.second << ')'; }
+template<typename T_container, typename T = typename enable_if<!is_same<T_container, string>::value, typename T_container::value_type>::type> ostream& operator<<(ostream &os, const T_container &v) { os << '{'; string sep; for (const T &x : v) os << sep << x, sep = ", "; return os << '}'; }
+template<typename Head, typename... Tail> void dbg_out(Head H, Tail... T) { cerr << ' ' << H; dbg_out(T...); }
 
-    for (auto s : n) {
-        if (s == '4' || s == '7')
-            luckyDigit++;
+template<typename T> T gcd(T a, T b) { return ( b ? __gcd(a, b) : a); }
+template<typename T> T lcm(T a, T b) { return (a * (b / gcd(a, b))); }
+
+#define forn(i, l, r) for (int i = (int)l; i < (int)r; ++i)
+#define fore(i, l, r) for (int i = (int)l; i <= (int)r; ++i)
+#define trav(i, a) for (auto& i : a)
+#define allit(a) a.begin(), a.end()
+#define sz(x) (int)(x).size()
+#define pb push_back
+#define SHUF(v) shuffle(all(v), mt_rand)
+#define umap unordered_map
+#define uset unordered_set
+#define imax INT_MAX
+#define imin INT_MIN
+
+#ifdef _GLIBCXX_DEBUG
+#define debug(...) cerr << "[DEBUG]: [" << #__VA_ARGS__ << "]:", dbg_out(__VA_ARGS__)
+#else
+#define debug(...)
+#endif
+
+typedef long long ll;
+typedef long double ld;
+typedef pair<int, int> pi;
+typedef vector<int> vi;
+typedef vector< vi > vvi;
+typedef vector< pi > vpi;
+
+// mt19937_64 for 64 bit random numbers
+mt19937 mt_rand(chrono::high_resolution_clock::now().time_since_epoch().count());
+
+const char nl = '\n';
+/* const ld PI = acos(-1.0); */
+
+bool solve(ll n) {
+    // Algorithm:
+    // Traverse through the given number, and track the number of 4s and 7s
+    // Check if the total number of 4s and 7s contain only 4 and 7
+    //
+    // Time: O(log_10 n)
+    // Space: O(1)
+
+    int digit, nLuckyDigits = 0;
+    while (n) {
+        digit = n % 10;
+        n /= 10;
+
+        if (digit == 4 || digit == 7)
+            nLuckyDigits++;
     }
 
-    if (luckyDigit == 0) {
-        isLucky = false;
-    } else {
-        while (luckyDigit != 0 && isLucky) {
-            int d = luckyDigit % 10;
+    if (nLuckyDigits == 0)
+        return false;
 
-            if (d != 4 && d != 7)
-                isLucky = false;
+    while (nLuckyDigits) {
+        digit = nLuckyDigits % 10;
+        nLuckyDigits /= 10;
 
-            luckyDigit /= 10;
-        }
+        if (digit != 4 && digit != 7)
+            return false;
     }
 
-    if (isLucky)
-        cout << "YES" << '\n';
-    else
-        cout << "NO" << '\n';
+    return true;
 }
 
 int main() {
-    ios_base::sync_with_stdio(0);
-    cin.tie(0);
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
 
-    string n;
+    ll n;
     cin >> n;
+    cout << (solve(n) ? "YES" : "NO") << nl;
 
-    isNearlyLucky(n);
+#ifdef _GLIBCXX_DEBUG
+    cerr << endl << "finished in " << clock() * 1.0 / CLOCKS_PER_SEC << " sec" << endl;
+#endif
 
     return 0;
 }
