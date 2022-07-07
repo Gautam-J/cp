@@ -1,6 +1,6 @@
-/* LC - Easy grind 17 */
-/* Time Complexity: O(n) */
-/* Space Complexity: O(1) */
+/* LC - Easy Grind 14 */
+/* Time Complexity: O(n) for push operation */
+/* Space Complexity: O(n) for push operation */
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -44,43 +44,61 @@ mt19937 mt_rand(chrono::high_resolution_clock::now().time_since_epoch().count())
 const char nl = '\n';
 /* const ld PI = acos(-1.0); */
 
-int solve(int n) {
-    // Algorithm:
-    // Calculate nth fibinacci number.
-    // Set base cases as follows:
-    // n = 1 => 1
-    // n = 2 => 2
-    //
-    // Iterate using a loop, from i = 3 to n
-    // c = a + b
-    // a = b
-    // b = c
-    //
-    // Time: O(n)
-    // Space: O(1)
+class MyQueue {
+public:
+    stack<int> s1, s2;
 
-    if (n == 1)
-        return 1;
-    if (n == 2)
-        return 2;
-
-    int a = 1, b = 2, c;
-    for (int i = 3; i <= n; ++i) {
-        c = a + b;
-        a = b;
-        b = c;
+    MyQueue() {
     }
 
-    return c;
-}
+    void push(int x) {
+        // Algorithm:
+        // Transfer all elements from s1 to s2
+        // Push new element to s2 (or s1)
+        // Transfer all elements from s2 to s1
+        //
+        // Time: O(n)
+        // Space: O(n)
+
+        while (!s1.empty()) {
+            s2.push(s1.top());
+            s1.pop();
+        }
+
+        s2.push(x);
+        while (!s2.empty()) {
+            s1.push(s2.top());
+            s2.pop();
+        }
+    }
+
+    int pop() {
+        int t = s1.top();
+        s1.pop();
+        return t;
+    }
+
+    int peek() {
+        return s1.top();
+    }
+
+    bool empty() {
+        return s1.empty();
+    }
+};
 
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int n;
-    cin >> n;
-    cout << solve(n) << nl;
+    MyQueue q;
+    q.push(1);
+    q.push(2);
+    q.push(3);
+    q.pop();
+
+    while (!q.empty())
+        cout << q.pop() << nl;
 
 #ifdef _GLIBCXX_DEBUG
     cerr << endl << "finished in " << clock() * 1.0 / CLOCKS_PER_SEC << " sec" << endl;

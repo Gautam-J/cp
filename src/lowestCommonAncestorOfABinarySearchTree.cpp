@@ -1,4 +1,4 @@
-/* LC - Easy, grind - 11 */
+/* LC - Easy, grind 11 */
 /*
 Given a binary search tree (BST), find the lowest common ancestor (LCA) of two given nodes in the BST.
 

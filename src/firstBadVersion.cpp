@@ -1,6 +1,6 @@
-/* LC - Easy grind 17 */
-/* Time Complexity: O(n) */
-/* Space Complexity: O(1) */
+/* LC - Easy grind 15 */
+/* Time Complexity: O(logn) */
+/* Space Complexity: O(n) */
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -44,42 +44,49 @@ mt19937 mt_rand(chrono::high_resolution_clock::now().time_since_epoch().count())
 const char nl = '\n';
 /* const ld PI = acos(-1.0); */
 
+vi arr;
+
+bool isBadVersion(int version) {
+    return arr[version - 1];
+}
+
 int solve(int n) {
     // Algorithm:
-    // Calculate nth fibinacci number.
-    // Set base cases as follows:
-    // n = 1 => 1
-    // n = 2 => 2
+    // Using binary search to find the first occurence of a badVersion
     //
-    // Iterate using a loop, from i = 3 to n
-    // c = a + b
-    // a = b
-    // b = c
+    // If mid is a bad version, set high = mid
+    // else set low = mid + 1
     //
-    // Time: O(n)
+    // Finally, low will give the position of first badVersion
+    // Return low, for 1 based indexing
+    //
+    // Time: O(log n)
     // Space: O(1)
 
-    if (n == 1)
-        return 1;
-    if (n == 2)
-        return 2;
+    int low = 1, high = n, mid;
+    while (low < high) {
+        mid = low + (high - low) / 2;
 
-    int a = 1, b = 2, c;
-    for (int i = 3; i <= n; ++i) {
-        c = a + b;
-        a = b;
-        b = c;
+        if (isBadVersion(mid))
+            high = mid;
+        else
+            low = mid + 1;
     }
 
-    return c;
+    return low;
 }
 
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int n;
+    int n, t;
     cin >> n;
+    forn(i, 0, n) {
+        cin >> t;
+        arr.pb(t);
+    }
+
     cout << solve(n) << nl;
 
 #ifdef _GLIBCXX_DEBUG

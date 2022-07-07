@@ -1,4 +1,4 @@
-/* CLRS */
+/* CLRS LC - Easy grind 8 */
 
 /* Time Complexity: O(lg N) */
 /* Space Complexity: O(1) */

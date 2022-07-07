@@ -1,8 +1,9 @@
-/* LC - Easy grind 17 */
-/* Time Complexity: O(n) */
+/* LC - Easy grind 16 */
+/* Time Complexity: O(n + m) */
 /* Space Complexity: O(1) */
 
 #include <bits/stdc++.h>
+#include <set>
 using namespace std;
 
 void dbg_out() { cerr << endl; }
@@ -44,43 +45,44 @@ mt19937 mt_rand(chrono::high_resolution_clock::now().time_since_epoch().count())
 const char nl = '\n';
 /* const ld PI = acos(-1.0); */
 
-int solve(int n) {
+bool solve(string& ransomNote, string& magazine) {
     // Algorithm:
-    // Calculate nth fibinacci number.
-    // Set base cases as follows:
-    // n = 1 => 1
-    // n = 2 => 2
+    // Traverse through each letter in magazine, and increment freq
+    // Traverse through each letter in ransomNote, and decrement freq
+    // If freq reaches negative, then return false
     //
-    // Iterate using a loop, from i = 3 to n
-    // c = a + b
-    // a = b
-    // b = c
+    // Finally return true
     //
-    // Time: O(n)
+    // Time: O(n + m) where n and m are lengths of strings respectively
     // Space: O(1)
 
-    if (n == 1)
-        return 1;
-    if (n == 2)
-        return 2;
+    int freq[26] = { 0 };
+    for (const char& c : magazine)
+        freq[c - 'a']++;
 
-    int a = 1, b = 2, c;
-    for (int i = 3; i <= n; ++i) {
-        c = a + b;
-        a = b;
-        b = c;
+    for (const char& c : ransomNote) {
+        if (--freq[c - 'a'] < 0)
+            return false;
     }
 
-    return c;
+    return true;
+}
+
+bool solveSTL(string& ransomNote, string& magazine) {
+
+    multiset<char> rs(ransomNote.begin(), ransomNote.end());
+    multiset<char> mag(magazine.begin(), magazine.end());
+    return includes(mag.begin(), mag.end(), rs.begin(), rs.end());
 }
 
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int n;
-    cin >> n;
-    cout << solve(n) << nl;
+    string rn, m;
+    cin >> rn >> m;
+    cout << (solve(rn, m) ? "YES" : "NO") << nl;
+    cout << (solveSTL(rn, m) ? "YES" : "NO") << nl;
 
 #ifdef _GLIBCXX_DEBUG
     cerr << endl << "finished in " << clock() * 1.0 / CLOCKS_PER_SEC << " sec" << endl;
