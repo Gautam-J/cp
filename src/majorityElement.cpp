@@ -1,32 +1,8 @@
-/* LC - Easy */
-/*
-Given an array nums of size n, return the majority element.
-
-The majority element is the element that appears more than ?n / 2? times. You may assume that the majority element always exists in the array.
-
-Example 1:
-
-Input: nums = [3,2,3]
-Output: 3
-Example 2:
-
-Input: nums = [2,2,1,1,1,2,2]
-Output: 2
-
-Constraints:
-
-n == nums.length
-1 <= n <= 5 * 104
--231 <= nums[i] <= 231 - 1
-
-Follow-up: Could you solve the problem in linear time and in O(1) space?
-*/
-
+/* LC - Easy grind 20 */
 /* Time Complexity: O(n) */
 /* Space Complexity: O(1) */
 
 #include <bits/stdc++.h>
-#include <sys/signal.h>
 using namespace std;
 
 void dbg_out() { cerr << endl; }
@@ -37,8 +13,8 @@ template<typename Head, typename... Tail> void dbg_out(Head H, Tail... T) { cerr
 template<typename T> T gcd(T a, T b) { return ( b ? __gcd(a, b) : a); }
 template<typename T> T lcm(T a, T b) { return (a * (b / gcd(a, b))); }
 
-#define forn(i, n) for (int i = 0; i < n; i++)
-#define fore(i, l, r) for (int i = (int)l; i <= (int)r; i++)
+#define forn(i, l, r) for (int i = (int)l; i < (int)r; ++i)
+#define fore(i, l, r) for (int i = (int)l; i <= (int)r; ++i)
 #define trav(i, a) for (auto& i : a)
 #define allit(a) a.begin(), a.end()
 #define sz(x) (int)(x).size()
@@ -69,8 +45,23 @@ const char nl = '\n';
 /* const ld PI = acos(-1.0); */
 
 int solve(vi& a) {
+    // Algorithm:
+    // Boyer-Moore Voting Algorithm
+    //
+    // Initialize votes = 0, majority = NULL;
+    // Traverse through each element i in array
+    // if votes == 0, set majority = i, votes = 1
+    //
+    // else if majority == i, votes++
+    // else votes--
+    //
+    // Return majority
+    //
+    // Time: O(n)
+    // Space: O(1)
+
     int majority, votes = 0;
-    trav(i, a) {
+    for (const int& i : a) {
         if (votes == 0) {
             majority = i;
             votes = 1;
@@ -94,7 +85,6 @@ int main() {
     vi a(n);
     trav(i, a)
         cin >> i;
-
     cout << solve(a) << nl;
 
 #ifdef _GLIBCXX_DEBUG
