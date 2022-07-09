@@ -1,80 +1,83 @@
-/* LC - Easy */
-/*
-Given the head of a singly linked list, return the middle node of the linked list.
-
-If there are two middle nodes, return the second middle node.
-
-
-
-Example 1:
-
-
-Input: head = [1,2,3,4,5]
-Output: [3,4,5]
-Explanation: The middle node of the list is node 3.
-Example 2:
-
-
-Input: head = [1,2,3,4,5,6]
-Output: [4,5,6]
-Explanation: Since the list has two middle nodes with values 3 and 4, we return the second one.
-
-
-Constraints:
-
-The number of nodes in the list is in the range [1, 100].
-1 <= Node.val <= 100
-*/
-
+/* LC - Easy grind 23 */
 /* Time Complexity: O(n) */
 /* Space Complexity: O(1) */
 
 #include <bits/stdc++.h>
 using namespace std;
 
-#define FOR(i, n) for (int i = 0; i < n; i++)
-#define all(a) a.begin(), a.end()
-#define sz(x) (int)(x).size()
+void dbg_out() { cerr << endl; }
+template<typename A, typename B> ostream& operator<<(ostream &os, const pair<A, B> &p) { return os << '(' << p.first << ", " << p.second << ')'; }
+template<typename T_container, typename T = typename enable_if<!is_same<T_container, string>::value, typename T_container::value_type>::type> ostream& operator<<(ostream &os, const T_container &v) { os << '{'; string sep; for (const T &x : v) os << sep << x, sep = ", "; return os << '}'; }
+template<typename Head, typename... Tail> void dbg_out(Head H, Tail... T) { cerr << ' ' << H; dbg_out(T...); }
+
+template<typename T> T gcd(T a, T b) { return ( b ? __gcd(a, b) : a); }
+template<typename T> T lcm(T a, T b) { return (a * (b / gcd(a, b))); }
+
+#define forn(i, l, r) for (int i = (int)l; i < (int)r; ++i)
+#define fore(i, l, r) for (int i = (int)l; i <= (int)r; ++i)
 #define trav(i, a) for (auto& i : a)
+#define allit(a) a.begin(), a.end()
+#define sz(x) (int)(x).size()
+#define pb push_back
+#define SHUF(v) shuffle(all(v), mt_rand)
+#define umap unordered_map
+#define uset unordered_set
+#define imax INT_MAX
+#define imin INT_MIN
 
 #ifdef _GLIBCXX_DEBUG
-#define debug(x) cerr << "\e[91m"<<"[DEBUG] "<<__func__<<":"<<__LINE__<<" [" << #x << "] = [" << x << "]" << "\e[39m" << '\n';
+#define debug(...) cerr << "[DEBUG]: [" << #__VA_ARGS__ << "]:", dbg_out(__VA_ARGS__)
 #else
-#define debug(x)
+#define debug(...)
 #endif
 
 typedef long long ll;
+typedef long double ld;
 typedef pair<int, int> pi;
 typedef vector<int> vi;
-typedef vector<pi> vpi;
+typedef vector< vi > vvi;
+typedef vector< pi > vpi;
 
+// mt19937_64 for 64 bit random numbers
 mt19937 mt_rand(chrono::high_resolution_clock::now().time_since_epoch().count());
-const char nl = '\n';
-const double PI = acos(-1);
 
-// Definition for singly-linked list.
+const char nl = '\n';
+/* const ld PI = acos(-1.0); */
+
 struct ListNode {
     int val;
-    ListNode* next;
- };
+    ListNode *next;
+    ListNode() : val(0), next(nullptr) {}
+    ListNode(int x) : val(x), next(nullptr) {}
+    ListNode(int x, ListNode *next) : val(x), next(next) {}
+};
 
-ListNode* middleNode(ListNode* head) {
-    ListNode* t1 = head;
-    ListNode* t2 = head;
+ListNode* solve(ListNode* head) {
+    // Algorithm:
+    // Have 2 pointers, slow and fast
+    // Fast pointer moves twice as fast as the slow pointer
+    // Therefore, while fast->next is not null, update
+    // slow = slow.next
+    // fast = fast.next.next
+    //
+    // Finally, slow pointer will be the (second) middle element
+    //
+    // Time: O(n)
+    // Space: O(1)
 
-    while (t2 != NULL && t2->next != NULL) {
-        t1 = t1->next;
-        t2 = t2->next->next;
+    ListNode* slow = head, *fast = head;
+    while (fast != NULL && fast->next != NULL) {
+        slow = slow->next;
+        fast = fast->next->next;
     }
-
-    return t1;
+    return slow;
 }
 
 int main() {
-    ios_base::sync_with_stdio(0);
-    cin.tie(0);
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
 
-    cout << "Hello world!" << nl;
+    cout << "Hello, world!" << nl;
 
 #ifdef _GLIBCXX_DEBUG
     cerr << endl << "finished in " << clock() * 1.0 / CLOCKS_PER_SEC << " sec" << endl;

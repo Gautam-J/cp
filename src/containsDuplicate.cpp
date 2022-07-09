@@ -1,6 +1,6 @@
-/* LC - Easy grind 24 */
-/* Time Complexity: O(logn) */
-/* Space Complexity: O(logn) */
+/* LC - Easy grind 25 */
+/* Time Complexity: O() */
+/* Space Complexity: O() */
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -44,51 +44,29 @@ mt19937 mt_rand(chrono::high_resolution_clock::now().time_since_epoch().count())
 const char nl = '\n';
 /* const ld PI = acos(-1.0); */
 
-struct TreeNode {
-    int val;
-    TreeNode *left;
-    TreeNode *right;
-    TreeNode() : val(0), left(nullptr), right(nullptr) {}
-    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
-    TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
-};
-
-int dfs(TreeNode* root) {
+bool solve(vi& a) {
     // Algorithm:
-    // If root is null, return 0;
-    // Recursively calculate the height of left subtree and right subtree
-    // return max(leftDepth, rightDepth);
+    // Create a set using the given elements
+    // If the length of the set is equal to length of given array,
+    // then there are no duplicates
     //
-    // leftDepth = dfs(root.left) + 1;
-    // rightDepth = dfs(root.right) + 1;
-    // return max(leftDepth, rightDepth)
-    //
-    // Since we are adding 1 to both and taking max of them,
-    // it is the same as taking max of them, and then adding 1
-    // Thus we can rewrite as
-    //
-    // leftDepth = dfs(root.left);
-    // rightDepth = dfs(root.right);
-    // return max(leftDepth, rightDepth) + 1;
-    //
-    // OR
-    //
-    // return max(dfs(root.left), dfs(root.right)) + 1
-    //
-    // Time: O(logn)
-    // Space: O(logn)
+    // Time: O(n)
+    // Space: O(n)
 
-    if (root == NULL)
-        return 0;
-
-    return max(dfs(root->left), dfs(root->right)) + 1;
+    unordered_set<int> s(allit(a));
+    return s.size() != a.size();
 }
 
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    cout << "Hello, world!" << nl;
+    int n;
+    cin >> n;
+    vi a(n);
+    trav(i, a)
+        cin >> i;
+    cout << (solve(a) ? "YES" : "NO") << nl;
 
 #ifdef _GLIBCXX_DEBUG
     cerr << endl << "finished in " << clock() * 1.0 / CLOCKS_PER_SEC << " sec" << endl;

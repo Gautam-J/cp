@@ -1,4 +1,4 @@
-/* LC - Easy grind 24 */
+/* LC - Easy grind 22 */
 /* Time Complexity: O(logn) */
 /* Space Complexity: O(logn) */
 
@@ -53,35 +53,35 @@ struct TreeNode {
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
 
-int dfs(TreeNode* root) {
+int dfs(TreeNode* root, int& diameter) {
     // Algorithm:
-    // If root is null, return 0;
-    // Recursively calculate the height of left subtree and right subtree
-    // return max(leftDepth, rightDepth);
-    //
-    // leftDepth = dfs(root.left) + 1;
-    // rightDepth = dfs(root.right) + 1;
-    // return max(leftDepth, rightDepth)
-    //
-    // Since we are adding 1 to both and taking max of them,
-    // it is the same as taking max of them, and then adding 1
-    // Thus we can rewrite as
-    //
-    // leftDepth = dfs(root.left);
-    // rightDepth = dfs(root.right);
-    // return max(leftDepth, rightDepth) + 1;
-    //
-    // OR
-    //
-    // return max(dfs(root.left), dfs(root.right)) + 1
+    // If root is null, return 0
+    // recursively call dfs to get height of left and right subtree
+    // update diameter as sum of left and right subtree height
+    // return max(leftHeight, rightRight) + 1
+
+    if (!root)
+        return 0;
+
+    int leftHeight = dfs(root->left, diameter);
+    int rightHeight = dfs(root->right, diameter);
+
+    diameter = max(diameter, leftHeight + rightHeight);
+    return max(leftHeight, rightHeight) + 1;
+}
+
+int diameterOfBinaryTree(TreeNode* root) {
+    // Algorithm:
+    // Diameter of a binary tree is the height of left subtree +
+    // height of right subtree
+    // Thus, we use dfs to find the individual heights, and add them up.
     //
     // Time: O(logn)
     // Space: O(logn)
 
-    if (root == NULL)
-        return 0;
-
-    return max(dfs(root->left), dfs(root->right)) + 1;
+    int diameter = 0;
+    dfs(root, diameter);
+    return diameter;
 }
 
 int main() {

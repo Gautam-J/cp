@@ -60,7 +60,6 @@ int solve(vi& a, vi& b) {
     sort(allit(a));
     sort(allit(b));
 
-    // TODO: Check if possible solution
     /* int i = 0, j = 0, c = 0, n = sz(a); */
     /* while (i < n && j < n) { */
     /*     if (a[i] > b[j]) { */
