@@ -130,6 +130,31 @@ map<char, string> solve(vector<char>& chars, vi& freqs) {
     return res;
 }
 
+int getStandardSize(vi& freqs) {
+    int res = 0;
+    trav(f, freqs)
+        res += (8 * f);
+    return res;
+}
+
+int getHuffmanSize(vector<char>& chars, vi& freqs, map<char, string>& res) {
+    int ans = 0;
+    int n = sz(chars);
+
+    forn(i, 0, n)
+        ans += (freqs[i] * sz(res[chars[i]]));
+
+    return ans;
+}
+
+int getTotalBits(vector<char>& chars, vi& freqs, map<char, string>& res) {
+    int ans = 8 * sz(chars);
+    trav(p, res)
+        ans += sz(p.second);
+    ans += getHuffmanSize(chars, freqs, res);
+    return ans;
+}
+
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
@@ -162,6 +187,11 @@ int main() {
     cout << "Huffman Encodings:" << nl;
     trav(p, res)
         cout << p.first << ": " << p.second << nl;
+    cout << nl;
+
+    cout << "Standard Encoding: " << getStandardSize(freqs) << " bits\n";
+    cout << "Huffman Encoding: " << getHuffmanSize(chars, freqs, res) << " bits\n";
+    cout << "Total bits needed: " << getTotalBits(chars, freqs, res) << " bits\n";
 
 #ifdef _GLIBCXX_DEBUG
     cerr << endl << "finished in " << clock() * 1.0 / CLOCKS_PER_SEC << " sec" << endl;
