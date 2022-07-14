@@ -30,7 +30,6 @@ int main() {
         cin >> arr[i];
     }
 
-    cout << '\n';
     cin >> v;
 
     cout << linearSearch(arr, v) << "\n";

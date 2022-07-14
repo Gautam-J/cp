@@ -1,6 +1,6 @@
-/* LC - Easy grind 25 */
+/* CF */
 /* Time Complexity: O(n) */
-/* Space Complexity: O(n) */
+/* Space Complexity: O(1) */
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -44,29 +44,35 @@ mt19937 mt_rand(chrono::high_resolution_clock::now().time_since_epoch().count())
 const char nl = '\n';
 /* const ld PI = acos(-1.0); */
 
-bool solve(vi& a) {
+void solve(int n) {
     // Algorithm:
-    // Create a set using the given elements
-    // If the length of the set is equal to length of given array,
-    // then there are no duplicates
+    // 2 will always be the value of 2 that gives maximum cost value
+    // We iterate through 1 to n, and for every odd number, we multiply
+    // by 2, until we reach n.
     //
     // Time: O(n)
-    // Space: O(n)
+    // Space: O(1)
 
-    unordered_set<int> s(allit(a));
-    return s.size() != a.size();
+    cout << 2 << nl;
+    for (int i = 1; i <= n; ++i) {
+        if (i % 2 != 0) {
+          for (int j = i; j <= n; j *= 2)
+            cout << j << ' ';
+        }
+    }
+    cout << nl;
 }
 
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int n;
-    cin >> n;
-    vi a(n);
-    trav(i, a)
-        cin >> i;
-    cout << (solve(a) ? "YES" : "NO") << nl;
+    int t, n;
+    cin >> t;
+    while (t--) {
+        cin >> n;
+        solve(n);
+    }
 
 #ifdef _GLIBCXX_DEBUG
     cerr << endl << "finished in " << clock() * 1.0 / CLOCKS_PER_SEC << " sec" << endl;

@@ -46,7 +46,7 @@ const char nl = '\n';
 
 int solve(int n) {
     // Algorithm:
-    // Calculate nth fibinacci number.
+    // Calculate nth fibonacci number.
     // Set base cases as follows:
     // n = 1 => 1
     // n = 2 => 2

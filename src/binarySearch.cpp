@@ -55,7 +55,6 @@ int main() {
         cin >> arr[i];
     }
 
-    cout << '\n';
     cin >> v;
 
     cout << binarySearch(arr, v, 0, arr.size() - 1) << "\n";

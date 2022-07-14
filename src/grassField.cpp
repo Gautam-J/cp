@@ -1,6 +1,6 @@
-/* LC - Easy grind 25 */
-/* Time Complexity: O(n) */
-/* Space Complexity: O(n) */
+/* CF */
+/* Time Complexity: O(1) */
+/* Space Complexity: O(1) */
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -44,29 +44,35 @@ mt19937 mt_rand(chrono::high_resolution_clock::now().time_since_epoch().count())
 const char nl = '\n';
 /* const ld PI = acos(-1.0); */
 
-bool solve(vi& a) {
+int solve(int a, int b, int c, int d) {
     // Algorithm:
-    // Create a set using the given elements
-    // If the length of the set is equal to length of given array,
-    // then there are no duplicates
+    // If all are 1, return 2
+    // If all are 0, return 0
+    // Return 1
     //
-    // Time: O(n)
-    // Space: O(n)
+    // Time: O(1)
+    // Space: O(1)
 
-    unordered_set<int> s(allit(a));
-    return s.size() != a.size();
+    if (a == 0 && b == 0 && c == 0 && d == 0)
+        return 0;
+
+    if (a == 1 && b == 1 && c == 1 && d == 1)
+        return 2;
+
+    return 1;
 }
 
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int n;
-    cin >> n;
-    vi a(n);
-    trav(i, a)
-        cin >> i;
-    cout << (solve(a) ? "YES" : "NO") << nl;
+    int t;
+    int a, b, c, d;
+    cin >> t;
+    while (t--) {
+        cin >> a >> b >> c >> d;
+        cout << solve(a, b, c, d) << nl;
+    }
 
 #ifdef _GLIBCXX_DEBUG
     cerr << endl << "finished in " << clock() * 1.0 / CLOCKS_PER_SEC << " sec" << endl;
