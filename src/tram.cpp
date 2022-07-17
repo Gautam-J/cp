@@ -1,66 +1,82 @@
-/* CF - 800 */
-/*
-A. Tram
-time limit per test2 seconds
-memory limit per test256 megabytes
-inputstandard input
-outputstandard output
-Linear Kingdom has exactly one tram line. It has n stops, numbered from 1 to n in the order of tram's movement. At the i-th stop ai passengers exit the tram, while bi passengers enter it. The tram is empty before it arrives at the first stop. Also, when the tram arrives at the last stop, all passengers exit so that it becomes empty.
-
-Your task is to calculate the tram's minimum capacity such that the number of people inside the tram at any time never exceeds this capacity. Note that at each stop all exiting passengers exit before any entering passenger enters the tram.
-
-Input
-The first line contains a single number n (2 ≤ n ≤ 1000) — the number of the tram's stops.
-
-Then n lines follow, each contains two integers ai and bi (0 ≤ ai, bi ≤ 1000) — the number of passengers that exits the tram at the i-th stop, and the number of passengers that enter the tram at the i-th stop. The stops are given from the first to the last stop in the order of tram's movement.
-
-The number of people who exit at a given stop does not exceed the total number of people in the tram immediately before it arrives at the stop. More formally, . This particularly means that a1 = 0.
-At the last stop, all the passengers exit the tram and it becomes empty. More formally, .
-No passenger will enter the train at the last stop. That is, bn = 0.
-Output
-Print a single integer denoting the minimum possible capacity of the tram (0 is allowed).
-
-Examples
-inputCopy
-4
-0 3
-2 5
-4 2
-4 0
-outputCopy
-6
-Note
-For the first example, a capacity of 6 is sufficient:
-
-At the first stop, the number of passengers inside the tram before arriving is 0. Then, 3 passengers enter the tram, and the number of passengers inside the tram becomes 3.
-At the second stop, 2 passengers exit the tram (1 passenger remains inside). Then, 5 passengers enter the tram. There are 6 passengers inside the tram now.
-At the third stop, 4 passengers exit the tram (2 passengers remain inside). Then, 2 passengers enter the tram. There are 4 passengers inside the tram now.
-Finally, all the remaining passengers inside the tram exit the tram at the last stop. There are no passenger inside the tram now, which is in line with the constraints.
-Since the number of passengers inside the tram never exceeds 6, a capacity of 6 is sufficient. Furthermore it is not possible for the tram to have a capacity less than 6. Hence, 6 is the correct answer.
-*/
-
+/* CF */
 /* Time Complexity: O(n) */
 /* Space Complexity: O(1) */
 
 #include <bits/stdc++.h>
 using namespace std;
 
-int main() {
-    ios_base::sync_with_stdio(0);
-    cin.tie(0);
+void dbg_out() { cerr << endl; }
+template<typename A, typename B> ostream& operator<<(ostream &os, const pair<A, B> &p) { return os << '(' << p.first << ", " << p.second << ')'; }
+template<typename T_container, typename T = typename enable_if<!is_same<T_container, string>::value, typename T_container::value_type>::type> ostream& operator<<(ostream &os, const T_container &v) { os << '{'; string sep; for (const T &x : v) os << sep << x, sep = ", "; return os << '}'; }
+template<typename Head, typename... Tail> void dbg_out(Head H, Tail... T) { cerr << ' ' << H; dbg_out(T...); }
 
-    int n, a, b, maxPassengers = 0;
+template<typename T> T gcd(T a, T b) { return ( b ? __gcd(a, b) : a); }
+template<typename T> T lcm(T a, T b) { return (a * (b / gcd(a, b))); }
+
+#define forn(i, l, r) for (int i = (int)l; i < (int)r; ++i)
+#define fore(i, l, r) for (int i = (int)l; i <= (int)r; ++i)
+#define trav(i, a) for (auto& i : a)
+#define allit(a) a.begin(), a.end()
+#define sz(x) (int)(x).size()
+#define pb push_back
+#define shuf(v) shuffle(all(v), rng)
+#define umap unordered_map
+#define uset unordered_set
+#define imax INT_MAX
+#define imin INT_MIN
+
+#ifdef _GLIBCXX_DEBUG
+#define debug(...) cerr << "[DEBUG]: [" << #__VA_ARGS__ << "]:", dbg_out(__VA_ARGS__)
+#else
+#define debug(...)
+#endif
+
+typedef long long ll;
+typedef long double ld;
+typedef pair<int, int> pi;
+typedef vector<int> vi;
+typedef vector< vi > vvi;
+typedef vector< pi > vpi;
+
+mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
+
+const char nl = '\n';
+/* const ld PI = acos(-1.0); */
+
+void solve() {
+    // Algorithm:
+    // Number of passengers at after every bus stop will be
+    // number of passengers in bus - number of passengers who get down +
+    // number of passengers who board in.
+    //
+    // Keep track of this value at every bus stop.
+    // Maximum of it will give the maximum passengers in bus at some point
+    // in route.
+    //
+    // Time: O(n)
+    // Space: O(1)
+
+    int n, a, b;
+    int currPass = 0, maxPass = 0;
     cin >> n;
-
-    int currPassengers = 0;
-    for (int i = 0; i < n; i++) {
+    forn(i, 0, n) {
         cin >> a >> b;
-
-        currPassengers += (b - a);
-        maxPassengers = max(maxPassengers, currPassengers);
+        currPass = (currPass - a) + b;
+        maxPass = max(maxPass, currPass);
     }
 
-    cout << maxPassengers << '\n';
+    cout << maxPass << nl;
+}
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    solve();
+
+#ifdef _GLIBCXX_DEBUG
+    cerr << endl << "finished in " << clock() * 1.0 / CLOCKS_PER_SEC << " sec" << endl;
+#endif
 
     return 0;
 }
