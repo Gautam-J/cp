@@ -7,3 +7,6 @@ Questions from sources:
 - [Codeforces](https://codeforces.com/)
 - [Leetcode](https://leetcode.com/)
 - [Kickstart](https://codingcompetitions.withgoogle.com/kickstart)
+
+> **NOTE**: The Space Complexity provided is the *auxiliary space*.
+> Space used to store the input is not considered.
