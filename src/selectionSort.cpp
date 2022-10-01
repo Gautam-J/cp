@@ -7,6 +7,8 @@
 using namespace std;
 
 void selectionSort(vector<int>& arr) {
+    // uses a greedy approach
+    // more efficient than bubble sort
     int min_index;
 
     for (int i = 0; i < arr.size() - 1; i++) {
