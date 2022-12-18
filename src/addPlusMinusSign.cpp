@@ -43,28 +43,33 @@ const char nl = '\n';
 void solve() {
     // Algorithm:
     // ==========
-    // If right angle triangle, then NO.
-    // If all xi are different or if all yi are different,
-    // then it is not a right angled triangle.
+    // Check the solution by brute force approach.
+    // Everytime we need to decide the operation to be performed,
+    // perform it and see which operation gives a total closer to 0.
     //
-    // Time: O(1)
+    // Time: O(n)
     // Space: O(1)
 
-    int t;
-    string temp;
+    int t, n;
     cin >> t;
+    string s;
     while (t--) {
-        getline(cin, temp);  // empty line
+        cin >> n;
+        cin >> s;
 
-        int x1, x2, x3, y1, y2, y3;
-        cin >> x1 >> y1;
-        cin >> x2 >> y2;
-        cin >> x3 >> y3;
+        int total = s[0] - '0';
+        forn(i, 1, n) {
+            int next = s[i] - '0';
 
-        if ((x1 != x2 && x2 != x3 && x1 != x3) || (y1 != y2 && y2 != y3 && y1 != y3))
-            cout << "YES" << nl;
-        else
-            cout << "NO" << nl;
+            if (abs(total + next) < abs(total - next)) {
+                cout << '+';
+                total += next;
+            } else {
+                cout << '-';
+                total -= next;
+            }
+        }
+        cout << nl;
     }
 }
 
