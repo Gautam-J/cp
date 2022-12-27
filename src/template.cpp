@@ -38,7 +38,7 @@ typedef vector< pi > vpi;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 const char nl = '\n';
-// const ll MOD = 1000000000;  // 10^9
+// const ll MOD = 1e9+7;
 // const ld PI = acos(-1.0);
 
 void solve() {
