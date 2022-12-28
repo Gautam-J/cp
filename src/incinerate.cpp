@@ -46,8 +46,8 @@ void solve() {
     // ==========
     //
     //
-    // Time: O()
-    // Space: O()
+    // Time: O(nlogn)
+    // Space: O(n)
 
     int t, n, k;
     cin >> t;

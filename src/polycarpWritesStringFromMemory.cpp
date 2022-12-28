@@ -1,7 +1,4 @@
 
-/* Time Complexity: O() */
-/* Space Complexity: O() */
-
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -48,8 +45,8 @@ int solve(string& s) {
     // Algorithm:
     //
     //
-    // Time: O()
-    // Space: O()
+    // Time: O(n)
+    // Space: O(n)
 
     int res = 0, n = sz(s);
     uset<char> seen;

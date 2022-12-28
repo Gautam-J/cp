@@ -1,7 +1,4 @@
 
-/* Time Complexity: O() */
-/* Space Complexity: O() */
-
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -48,8 +45,8 @@ int solve(int n) {
     // Algorithm:
     //
     //
-    // Time: O()
-    // Space: O()
+    // Time: O(log_10 n)
+    // Space: O(1)
 
     return n - pow(10, floor(log10(n)));
 }

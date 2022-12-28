@@ -1,7 +1,4 @@
 
-/* Time Complexity: O() */
-/* Space Complexity: O() */
-
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -48,8 +45,8 @@ void solve(vi& a, vector<string>& moves) {
     // Algorithm:
     //
     //
-    // Time: O()
-    // Space: O()
+    // Time: O(nm)
+    // Space: O(n)
 
     int n = sz(a);
     vi res;
