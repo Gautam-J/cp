@@ -16,7 +16,7 @@ template<typename T> T lcm(T a, T b) { return (a * (b / gcd(a, b))); }
 #define allit(a) a.begin(), a.end()
 #define sz(x) (int)(x).size()
 #define pb push_back
-#define shuf(v) shuffle(all(v), rng)
+#define shuf(v) shuffle(allit(v), rng)
 #define umap unordered_map
 #define uset unordered_set
 #define imax INT_MAX
