@@ -4,5 +4,7 @@ bin/
 
 input
 output
+truth
+difference
 input.txt
 output.txt
