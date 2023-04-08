@@ -76,8 +76,8 @@ const char nl = '\n';
 bool solve(string& s) {
     // Algorithm:
     // Iterate through the string
-    // if open bracket, add to stack.
-    // if close bracket, pop from stack, check if popped bracket closes open bracket
+    // if open bracket, add the close of it to stack.
+    // if close bracket, pop from stack, check if popped bracket matches the current bracket
     // additionally, before popping, stack should not be empty
     // If it is empty, then there are more close brackets
     //
@@ -88,37 +88,19 @@ bool solve(string& s) {
     // Space: O(n)
 
     stack<char> st;
-    char openBracket;
-
-    set<char> openBracketSet;
-    openBracketSet.insert('(');
-    openBracketSet.insert('[');
-    openBracketSet.insert('{');
 
     trav(c, s) {
-        if (openBracketSet.find(c) != openBracketSet.end())
-            st.push(c);
-        else {
-            if (st.empty())
+        if (c == '(') {
+            st.push(')');
+        } else if (c == '{') {
+            st.push('}');
+        } else if (c == '[') {
+            st.push(']');
+        } else {
+            if (st.empty() || st.top() != c) {
                 return false;
-
-            openBracket = st.top();
-            st.pop();
-
-            switch (c) {
-                case ')':
-                    if (openBracket != '(')
-                        return false;
-                    break;
-                case ']':
-                    if (openBracket != '[')
-                        return false;
-                    break;
-                case '}':
-                    if (openBracket != '{')
-                        return false;
-                    break;
             }
+            st.pop();
         }
     }
 

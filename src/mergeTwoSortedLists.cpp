@@ -107,33 +107,26 @@ ListNode* solve1(ListNode* list1, ListNode* list2) {
     if (!list2)
         return list1;
 
-    ListNode *res, *head;
-    if (list1->val < list2->val) {
-        head = list1;
-        list1 = list1->next;
-    } else {
-        head = list2;
-        list2 = list2->next;
-    }
+    ListNode* head = new ListNode();
+    ListNode* movingTail = head;
 
-    res = head;
     while (list1 && list2) {
         if (list1->val < list2->val) {
-            res->next = list1;
+            movingTail->next = list1;
             list1 = list1->next;
         } else {
-            res->next = list2;
+            movingTail->next = list2;
             list2 = list2->next;
         }
-        res = res->next;
+        movingTail = movingTail->next;
     }
 
     if (!list1)
-        res->next = list2;
+        movingTail->next = list2;
     else
-        res->next = list1;
+        movingTail->next = list1;
 
-    return head;
+    return head->next;
 }
 
 ListNode* solve2(ListNode* list1, ListNode* list2) {

@@ -82,7 +82,7 @@ const char nl = '\n';
 vi solve(vi& a, int target) {
     // Algorithm:
     // Iterate through array, calculate diff = target - a[i]
-    // Diff must be added to i to get target
+    // Diff must be added to a[i] to get target
     // Thus check if diff in array.
     // Instead of using another for loop, use a hashmap
     // If diff in map, then return
@@ -92,17 +92,17 @@ vi solve(vi& a, int target) {
     // Time: O(n)
     // Space: O(n)
 
-    // diff -> index of diff
+    // element -> index of element
     unordered_map<int, int> hm;
-    vector<int> res(2);
+    vector<int> res;
     int diff, n = sz(a);
 
     for (int i = 0; i < n; ++i) {
         diff = target - a[i];
 
         if (hm.find(diff) != hm.end()) {
-            res[0] = i;
-            res[1] = hm[diff];
+            res.push_back(i);
+            res.push_back(hm[diff]);
             return res;
         }
 
