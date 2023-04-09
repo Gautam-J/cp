@@ -85,7 +85,7 @@ struct TreeNode {
     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 
-void solve(TreeNode* root, TreeNode* p, TreeNode* q) {
+TreeNode* solve(TreeNode* root, TreeNode* p, TreeNode* q) {
     // Algorithm:
     // if root is null, return root;
     // if root.val > p.val and root.val > q.val,
@@ -97,13 +97,16 @@ void solve(TreeNode* root, TreeNode* p, TreeNode* q) {
     // Time: O(log n)
     // Space: O(log n)
 
-    if (!root)
-        return root;
-    if (root->val > p->val && root->val > q->val)
-        return solve(root->left, p, q);
-    if (root->val < p->val && root->val < q->val)
-        return solve(root->right, p, q);
-
+    int small = min(p->val, q->val);
+    int large = max(p->val, q->val);
+    while (root) {
+        if (root->val > large)
+            root = root->left;
+        else if (root->val < small)
+            root = root->right;
+        else
+            return root;
+    }
     return root;
 }
 
