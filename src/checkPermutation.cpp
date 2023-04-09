@@ -3,7 +3,7 @@
 
 /* First method is to sort the strings and check for equality. */
 
-/* Time Complexity: O(a log a + b log b) */
+/* Time Complexity: O(n log n) */
 /* Space Complexity: O(N) */
 
 /* Second method checks for identical character counts. */
@@ -39,15 +39,14 @@ bool checkPermutation2(string str1, string str2) {
 
     // count number of each characters in str1
     for (char c : str1) {
-        letters[c]++;
+        letters[c - 'a']++;
     }
 
     // check for char count
-    for (int i = 0; i < str2.length(); i++) {
-        int c = (int) str2.at(i);
-        letters[c]--;
+    for (char c : str2) {
+        letters[c - 'a']--;
 
-        if (letters[c] < 0)
+        if (letters[c - 'a'] < 0)
             return false;
     }
 

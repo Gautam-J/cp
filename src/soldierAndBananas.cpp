@@ -38,13 +38,26 @@ int moneyToBorrow(double k, double n, double w) {
     return 0;
 }
 
+void solve() {
+    int k, n, w;
+    cin >> k >> n >> w;
+
+    // = 1k + 2k + 3k + ... + wk
+    // = k (1 + 2 + ... + w)
+    // = k (w (w + 1) / 2)
+
+    int cost = ((w * (w + 1)) / 2) * k;
+    if (cost > n)
+        cout << cost - n << endl;
+    else
+        cout << 0 << endl;
+}
+
 int main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
 
-    double k, n, w;
-    cin >> k >> n >> w;
-    cout << moneyToBorrow(k, n, w) << "\n";
+    solve();
 
     return 0;
 }

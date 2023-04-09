@@ -52,11 +52,11 @@ bool checkMaxOneOdd(vector<int>& table) {
     return true;
 }
 
-bool isPermutationOfPalindrome(string str) {
-    vector<int> table;
-    table = buildCharFrequencyTable(str);
-    return checkMaxOneOdd(table);
-}
+// bool isPermutationOfPalindrome(string str) {
+//     vector<int> table;
+//     table = buildCharFrequencyTable(str);
+//     return checkMaxOneOdd(table);
+// }
 
 /* toggle the ith bit in the integer */
 int toggle(int bitVector, int index) {
@@ -92,6 +92,13 @@ bool checkExactlyOneBitSet(int bitVector) {
 bool isPermutationOfPalindrome2(string str) {
     int bitVector = createBitVector(str);
     return bitVector == 0 || checkExactlyOneBitSet(bitVector);
+}
+
+bool isPermutationOfPalindrome(string& s) {
+    bitset<26> b;
+    for (char& c : s)
+        b.flip(c - 'a');
+    return b.count() <= 1;
 }
 
 int main() {
