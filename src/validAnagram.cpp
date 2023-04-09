@@ -81,11 +81,16 @@ bool solve(string& s, string& t) {
     // Time: O(n + m)
     // Space: O(1)
 
+    if (s.size() != t.size())
+        return false;
+
     int hm[26] = { 0 };
-    for (const char& c : s)
-        hm[c - 'a']++;
-    for (const char& c : t)
-        hm[c - 'a']--;
+    int n = s.size();
+
+    for (int i = 0; i < n; i++) {
+        hm[s[i] - 'a']++;
+        hm[t[i] - 'a']--;
+    }
 
     for (int i = 0; i < 26; i++)
         if (hm[i] != 0)
