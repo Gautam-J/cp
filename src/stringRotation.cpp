@@ -5,10 +5,8 @@
 /* we check if there is a way to split s1 into x and y such that */
 /* xy = s1 and yx = s2, i.e., s2 will always be a substring of s1s1 */
 
-/* Time Complexity: O(a^2) */
-/* Space Complexity: O(a + b) */
-
-/* where a is the length of str1 and b is the length of str2 */
+/* Time Complexity: O(n) */
+/* Space Complexity: O(n) */
 
 #include <bits/stdc++.h>
 using namespace std;
