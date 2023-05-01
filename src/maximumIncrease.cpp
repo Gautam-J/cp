@@ -38,7 +38,7 @@ outputCopy
 // We can also solve in constant space using a greedy approach.
 
 /* Time Complexity: O(n) */
-/* Space Complexity: O(n) */
+/* Space Complexity: O(1) */
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -80,19 +80,33 @@ mt19937 mt_rand(chrono::high_resolution_clock::now().time_since_epoch().count())
 const char nl = '\n';
 const double PI = acos(-1);
 
+// int solve(vi& a) {
+//     int n = sz(a);
+//     int dp[n];
+//
+//     dp[0] = 1;
+//     for (int i = 1; i < n; i++) {
+//         if (a[i] > a[i - 1]) {
+//             dp[i] = dp[i - 1] + 1;
+//         } else {
+//             dp[i] = 1;
+//         }
+//     }
+//     return *max_element(dp, dp + n);
+// }
+
 int solve(vi& a) {
     int n = sz(a);
-    int dp[n];
-
-    dp[0] = 1;
+    int ans = 1, curr = 1;
     for (int i = 1; i < n; i++) {
         if (a[i] > a[i - 1]) {
-            dp[i] = dp[i - 1] + 1;
+            curr++;
         } else {
-            dp[i] = 1;
+            curr = 1;
         }
+        ans = max(ans, curr);
     }
-    return *max_element(dp, dp + n);
+    return ans;
 }
 
 int main() {
