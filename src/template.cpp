@@ -56,7 +56,10 @@ int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    solve();
+    int t = 1;
+    cin >> t;
+    while(t--)
+        solve();
 
 #ifdef _GLIBCXX_DEBUG
     cerr << endl << "finished in " << clock() * 1.0 / CLOCKS_PER_SEC << " sec" << endl;
