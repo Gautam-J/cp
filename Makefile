@@ -8,6 +8,20 @@ EXECS = $(patsubst $(SRC)/%.cpp,$(BIN)/%,$(SOURCES))
 
 all: $(EXECS)
 
-$(BIN)/%:  $(SRC)/%.cpp
+# Create bin directory if it doesn't exist
+$(BIN):
+	@mkdir -p $@
+
+# Compile rule with directory dependency
+$(BIN)/%: $(SRC)/%.cpp | $(BIN)
 	@echo "Compiling $<..."
-	$(CC) $(CFLAGS) $(INC) $< -o $@ $(LIBS)
+	$(CC) $(CFLAGS) $< -o $@
+
+clean:
+	@echo "Cleaning..."
+	@if [ -d "$(BIN)" ]; then \
+		find "$(BIN)" -mindepth 1 -not -name '.gitkeep' -delete; \
+	fi
+	@echo "Removed all binaries!"
+
+.PHONY: all clean
