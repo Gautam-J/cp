@@ -100,13 +100,11 @@ void solve() {
     }
 
     char middle_element;
-    int middle_freq;
     bool has_odd = false;
     trav(p, freq) {
-        if (p.second & 1) {
+        if (p.second & 1) {  // alternatively, also check if has_odd = true, then NO SOLUTION
             has_odd = true;
             middle_element = p.first;
-            middle_freq = p.second;
             break;
         }
     }
@@ -115,10 +113,22 @@ void solve() {
         freq[p.first] = p.second / 2;
     }
 
+    // string first_half;
+    // trav(p, freq) {
+    //     forn(i, 0, p.second)
+    //         first_half.pb(p.first);
+    // }
+    //
+    // string second_half = first_half;
+    // reverse(allit(second_half));
+    //
+    // cout << first_half;
+    // if (has_odd)
+    //     cout << middle_element;
+    // cout << second_half << nl;
+
     string res;
     trav(p, freq) {
-        if (has_odd && p.first == middle_element)
-            continue;
         forn(i, 0, p.second)
             res.pb(p.first);
     }
@@ -126,8 +136,7 @@ void solve() {
     int first_half_size = sz(res);
 
     if (has_odd) {
-        forn(i, 0, middle_freq)
-            res.pb(middle_element);
+        res.pb(middle_element);
     }
 
     forn(i, 0, first_half_size) {
